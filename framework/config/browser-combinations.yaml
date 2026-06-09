@@ -1,0 +1,56 @@
+# Browser and OS combinations for different execution environments
+# Based on BrowserStack supported platforms configuration
+
+combinations:
+  # Desktop combinations
+  windows-chrome:
+    type: desktop
+    os: Windows
+    osVersion: "10"
+    browserName: chrome
+    browserVersion: latest
+    description: "Windows 10 with Chrome latest"
+  windows-firefox:
+    type: desktop
+    os: Windows
+    osVersion: "10"
+    browserName: firefox
+    browserVersion: "110.0"
+    description: "Windows 10 with Firefox 110.0 (Compatible with Playwright 1.32.0)"
+
+  macos-safari:
+    type: desktop
+    os: "OS X"
+    osVersion: "Monterey"
+    browserName: Safari
+    browserVersion: "15.6"
+    description: "macOS Monterey with Safari 15.6"
+  windows-edge:
+    type: desktop
+    os: Windows
+    osVersion: "11"
+    browserName: edge
+    browserVersion: latest
+    description: "Windows 11 with Edge browser"
+
+  # Mobile combinations
+  iphone-safari:
+    type: mobile
+    osVersion: "15"
+    deviceName: "iPhone 13"
+    browserName: Safari
+    description: "iPhone 13 with Safari"
+
+  android-chrome:
+    type: mobile
+    deviceName: "Samsung Galaxy S22"
+    platformName: Android
+    platformVersion: "12.0"
+    browserName: Chrome
+    description: "Android Samsung Galaxy S22 with Chrome"
+
+# Default combinations for each environment
+defaults:
+  local: windows-chrome
+  browserstack: windows-chrome
+  saucelabs: windows-chrome

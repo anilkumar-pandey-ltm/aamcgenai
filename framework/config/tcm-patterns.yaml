@@ -1,0 +1,48 @@
+# Simple Test Case ID Configuration
+# This file defines patterns to identify test case IDs from different TCM systems
+
+tcm_patterns:
+  # Test case ID patterns for different systems
+  # Add your TCM system patterns here
+  
+  jira:
+    # Examples: @PROJ-123, @MYPROJ-456
+    pattern: "^[A-Z]+-\\d+$"
+    example: "@PROJ-123"
+    
+  azure_devops:
+    # Examples: @TC123, @TCID456
+    pattern: "^TC(ID)?\\d+$"
+    example: "@TC123"
+    
+  testrail:
+    # Examples: @C123, @CASE456
+    pattern: "^C(ASE)?\\d+$"
+    example: "@C123"
+    
+  qtest:
+    # Examples: @QT123, @QTEST456
+    pattern: "^Q(T|TEST)\\d+$"
+    example: "@QT123"
+    
+  generic:
+    # Examples: @TC001, @TEST123
+    pattern: "^(TC|TEST|ID)\\d+$"
+    example: "@TC001"
+
+# Configuration
+settings:
+  # Which patterns to check (can be multiple)
+  active_patterns:
+    - "jira"
+    - "azure_devops" 
+    - "generic"
+  
+  # What to show when test case ID is missing
+  missing_id_message: "@missingTCID"
+  
+  # Whether to fail tests when TCM ID is missing
+  fail_on_missing_tcid: false
+  
+  # Report missing test case IDs
+  report_missing_tcids: true

@@ -1,0 +1,158 @@
+# Main Framework Configuration
+# This file contains core execution settings only
+# Browser combinations are defined in browser-combinations.yaml
+# Cloud provider settings are defined in cloud-providers.yaml
+# Credentials are stored in .env file
+
+# Execution environment: local, browserstack, saucelabs
+execution:
+  environment: local # Options: local, browserstack, saucelabs
+  fallbackToLocal: false # If true, falls back to local browser when cloud provider fails
+  # Can be overridden by environment variable: FALLBACK_TO_LOCAL=true
+
+# Browser display settings (applies to all environments)
+browser:
+  headless: false # true or false - whether to run browser in headless mode
+
+# Video recording settings (applies to local execution)
+recording:
+  enabled: true # Enable/disable video recording for local tests
+  mode: "on" # Options: off, on, retain-on-failure, on-first-retry
+  dir: "test-results/videos" # Directory to store videos
+  size: "1920x1080" # Video size for local recordings
+  
+# Local video recording mode (simplified control)
+localRecordVideo: "all" # Options: all, failures (retain-on-failure), off
+
+# Network and debugging settings (for RCA and troubleshooting)
+debugging:
+  networkLogs: true # Enable network request/response logging
+  consoleCapture: true # Capture browser console logs
+  performanceMetrics: true # Collect performance timing data
+  harFiles: true # Generate HAR files for network analysis
+  screenshotOnError: true # Take screenshots on any error
+  pageSource: true # Save page source on failures
+  slowMotion: 0 # Slow down actions for debugging (ms delay, 0 = disabled)
+  
+# Step-level logging configuration (NEW)
+stepLogging:
+  enabled: true # Enable automatic step logging
+  logLevel: "info" # Options: debug, info, warn, error
+  capturePageState: true # Capture page state before each step
+  logElementActions: true # Log all element interactions
+  logAssertions: true # Log assertion details
+  logWaitConditions: true # Log wait condition results
+  rcaOnFailure: true # Capture comprehensive RCA data on step failures
+  
+# RCA (Root Cause Analysis) settings (NEW)
+rca:
+  enabled: true # Enable RCA data capture
+  captureScreenshots: true # Take screenshots for RCA
+  capturePageSource: true # Save page source for RCA
+  captureBrowserInfo: true # Capture browser/environment info
+  captureDOMState: true # Analyze DOM state
+  captureNetworkState: true # Capture network activity
+  generateSummary: true # Generate RCA summary report
+
+# Network request logging configuration
+network:
+  captureRequests: true # Log all network requests
+  captureResponses: true # Log network responses
+  captureHeaders: true # Include request/response headers
+  captureCookies: true # Include cookie information
+  filterDomains: [] # Only log requests to specific domains (empty = all)
+  ignoredResourceTypes: ["image", "font", "media"] # Skip these resource types
+  logLevel: "info" # Options: debug, info, warn, error
+
+# Parallel execution settings
+parallel:
+  workers: 2 # Number of parallel workers
+
+# Logging configuration
+logging:
+  consoleLevel: "debug" # Options: debug, info, warn, error  
+  fileLevel: "debug"   # Options: debug, info, warn, error
+  
+# Application settings
+baseUrl: http://localhost:3000 # Default base URL for the application under test
+
+# API testing configuration
+api:
+  baseURL: "https://jsonplaceholder.typicode.com" # Default API base URL
+  timeout: 30000 # Request timeout in milliseconds
+  retries: 3 # Number of retry attempts for failed requests
+  headers: # Default headers for all API requests
+    Content-Type: "application/json"
+    Accept: "application/json"
+  authentication:
+    type: "none" # Options: none, bearer, basic, apikey, oauth2
+    # token: "${API_TOKEN}" # Bearer token (use environment variable)
+    # username: "${API_USERNAME}" # Basic auth username
+    # password: "${API_PASSWORD}" # Basic auth password
+    # apiKey: "${API_KEY}" # API key for X-API-Key header
+  validation:
+    validateStatus: true # Validate HTTP status codes
+    validateSchema: true # Validate response schemas
+    validateHeaders: false # Validate response headers
+    maxResponseTime: 5000 # Maximum acceptable response time (ms)
+  environments:
+    dev:
+      baseURL: "https://dev-api.example.com"
+    staging:
+      baseURL: "https://staging-api.example.com"
+    prod:
+      baseURL: "https://api.example.com"
+
+# Test execution settings
+tags: "@TC002" # Default tags to filter scenarios
+
+# Compatibility testing settings
+compatibility:
+  enabled: true # Set to true to enable cross-browser compatibility testing
+  browsers: # List of browser combinations to test against
+    - windows-chrome
+    - windows-firefox
+    # - macos-safari
+    # - windows-edge
+  mode: parallel # Options: parallel, sequential
+
+# Build and project naming (can be overridden by environment variables)
+build:
+  name: "Build 3.0" # Default build name
+  project: "FusionIQTest" # Default project name
+
+# AI Self-Healing Configuration
+ai_locator_healing:
+  enabled: true
+  server:
+    base_url: "http://localhost:8000"
+    endpoint: "/api/v1/self_healing/generate_locators"
+    timeout: 60000  # Increased to 60 seconds for AI healing to complete
+    retry_attempts: 3  # Increased retry attempts
+  
+  # LLM Model Configuration
+  model_settings:
+    default_model: "claude"  # Options: claude, gpt4, llama, etc.
+    fallback_models: ["gpt4", "llama"]  # Try these if default fails
+    max_suggestions: 5  # Increased maximum healing suggestions to try
+  
+  # Behavior Controls
+  behavior:
+    auto_update_yaml: false  # Whether to update YAML with successful AI locators
+    cache_ai_results: true   # Cache successful AI results for session
+    try_all_suggestions: true  # Try all suggestions for better healing
+    
+  # Error Handling
+  error_handling:
+    fallback_to_traditional: true  # Fall back to existing behavior if AI fails
+    max_ai_attempts: 3  # Increased AI healing attempts per element
+    capture_failure_data: true  # Capture detailed failure data for analysis
+
+
+
+# Reporting configuration
+report:
+  jsonFile: test-results/cucumber-report.json
+  htmlFile: test-results/cucumber-report.html
+  theme: bootstrap
+  # Metadata will be populated dynamically during test execution

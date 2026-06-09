@@ -1,0 +1,25 @@
+# Base URLs Configuration
+# Simple configuration for UI and API base URLs across different environments
+# Priority: Command line args > Environment variables > This config file
+
+# UI Base URLs
+ui:
+  default: "https://pgindiademo-fbbzfecrf5hacphz.southindia-01.azurewebsites.net/"
+  environments:
+    local: "https://pgindiademo-fbbzfecrf5hacphz.southindia-01.azurewebsites.net/"
+    prestashop_local: "http://localhost"
+    dev: "https://dev.example.com"
+    staging: "https://staging.example.com"
+    prod: "https://www.example.com"
+
+# API Base URLs
+api:
+  default: "https://jsonplaceholder.typicode.com"
+  environments:
+    local: "http://localhost/api"
+    prestashop_local: "http://localhost/api/"  # PrestaShop API endpoint
+    prestashop_ws: "http://localhost/api"
+    dev: "https://dev-api.example.com"
+    staging: "https://staging-api.example.com"
+    prod: "https://api.example.com"
+    jsonplaceholder: "https://jsonplaceholder.typicode.com"
