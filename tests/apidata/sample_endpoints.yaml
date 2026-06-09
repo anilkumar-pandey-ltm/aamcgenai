@@ -1,0 +1,40 @@
+# API Endpoints Configuration
+# Simple endpoint definitions organized by service/module
+# Base URLs are defined in base-urls.yaml
+
+# PrestaShop Customers API endpoints
+prestashop_customers:
+  base_path: "/customers"
+  endpoints:
+    get_all_customers:
+      method: GET
+      path: ""
+      description: "Get all customers"
+      headers:
+        "Output-Format": "JSON"
+    get_customer_by_id:
+      method: GET
+      path: "/{id}"
+      description: "Get customer by ID"
+      headers:
+        "Output-Format": "JSON"
+    create_customer:
+      method: POST
+      path: "/customer"
+      description: "Create a new customer"
+      headers:
+        "Content-Type": "application/xml"
+        "Output-Format": "JSON"
+    update_customer:
+      method: PUT
+      path: "/customer/{id}"
+      description: "Update customer completely"
+      headers:
+        "Content-Type": "application/xml"
+        "Output-Format": "JSON"
+    delete_customer:
+      method: DELETE
+      path: "/customer/{id}"
+      description: "Delete customer"
+      headers:
+        "Output-Format": "JSON"

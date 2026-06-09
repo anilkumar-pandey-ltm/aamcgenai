@@ -1,0 +1,117 @@
+# Test Case Management (TCM) Traceability Configuration
+# This file manages the mapping between automation test cases and cloud-based TCM systems
+
+tcm_integration:
+  # Primary TCM system configuration
+  primary_tcm:
+    system_name: "Azure DevOps" # or "Jira", "TestRail", "qTest", etc.
+    enabled: true
+    
+  # Tag configuration for TCM traceability
+  tag_mapping:
+    # Primary test case ID tags (mapped to TCM test cases)
+    test_case_prefixes:
+      - "TC"      # Example: @TC001, @TC002
+      - "TCID"    # Example: @TCID001, @TCID002
+      - "TEST"    # Example: @TEST001, @TEST002
+      - "ID"      # Example: @ID001, @ID002
+    
+    # Story/requirement tags (mapped to TCM requirements/user stories)
+    story_prefixes:
+      - "US"      # User Story: @US001
+      - "STORY"   # Story: @STORY001
+      - "REQ"     # Requirement: @REQ001
+      - "EPIC"    # Epic: @EPIC001
+    
+    # Feature tags (mapped to TCM test suites/modules)
+    feature_prefixes:
+      - "FEAT"    # Feature: @FEAT001
+      - "MODULE"  # Module: @MODULE001
+      - "SUITE"   # Suite: @SUITE001
+    
+    # Priority/Severity tags
+    priority_prefixes:
+      - "P"       # Priority: @P1, @P2, @P3
+      - "PRIORITY" # Priority: @PRIORITY_HIGH
+    
+    # Environment tags
+    environment_prefixes:
+      - "ENV"     # Environment: @ENV_PROD, @ENV_DEV
+      - "BROWSER" # Browser: @BROWSER_CHROME
+    
+  # Fallback behavior when TCM tags are missing
+  fallback_strategy:
+    # Options: "generate_missing_id", "use_scenario_name", "use_feature_scenario", "fail_execution"
+    missing_test_case_id: "generate_missing_id"
+    missing_id_prefix: "@missingTCID"
+    auto_generate_format: "{prefix}_{feature_name}_{scenario_index:03d}" # Example: @missingTCID_SignIn_001
+    
+    # Report generation options
+    generate_missing_tags_report: true
+    missing_tags_report_path: "test-results/missing-tcm-tags.json"
+    
+  # Test ID generation rules
+  test_id_format:
+    # Primary format when TCM tag exists
+    with_tcm_tag: "{tcm_id}" # Example: TC001
+    
+    # Secondary format with story context
+    with_story_context: "{story_id}_{tcm_id}" # Example: US001_TC001
+    
+    # Fallback format when no TCM tag
+    fallback_format: "{feature_name}_{scenario_name_normalized}" # Example: SignIn_InvalidUsername
+    
+    # Include scenario index for duplicate names
+    include_scenario_index: true # Example: TC001_001, TC001_002
+    
+  # Validation rules
+  validation:
+    # Enforce unique test case IDs across all feature files
+    enforce_unique_test_ids: true
+    
+    # Validate TCM tag format (regex patterns)
+    test_case_id_pattern: "^(TC|TCID|TEST|ID)\\d{3,}$" # Example: TC001, TCID0001
+    story_id_pattern: "^(US|STORY|REQ|EPIC)\\d{3,}$"
+    
+    # Duplicate tag detection
+    detect_duplicate_tags: true
+    allow_same_tag_multiple_scenarios: false # Set to true if same test case can have multiple scenarios
+    
+# Reporting configuration
+reporting:
+  # TCM traceability matrix generation
+  generate_traceability_matrix: true
+  traceability_matrix_path: "test-results/tcm-traceability-matrix.json"
+  
+  # Include additional metadata in reports
+  include_metadata:
+    execution_environment: true
+    browser_info: true
+    test_duration: true
+    screenshot_paths: true
+    video_paths: true
+    
+  # Export formats for TCM integration
+  export_formats:
+    - "json"     # For API integration
+    - "csv"      # For manual import
+    - "xml"      # For XML-based TCM systems
+    - "excel"    # For Excel-based reporting
+
+# Environment-specific overrides
+environments:
+  development:
+    tcm_integration:
+      primary_tcm:
+        enabled: false # Disable TCM integration in dev
+        
+  staging:
+    tcm_integration:
+      validation:
+        enforce_unique_test_ids: false # More lenient in staging
+        
+  production:
+    tcm_integration:
+      validation:
+        enforce_unique_test_ids: true # Strict validation in prod
+        detect_duplicate_tags: true

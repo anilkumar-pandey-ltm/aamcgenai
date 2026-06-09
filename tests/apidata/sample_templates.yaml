@@ -1,0 +1,238 @@
+# PrestaShop API test data templates with generators
+name: prestashop_customer_template
+description: Template for generating PrestaShop customer data dynamically
+template:
+  customer:
+    firstname: "{{firstName}}"
+    lastname: "{{lastName}}"
+    email: "{{email}}"
+    passwd: "{{password}}"
+    id_default_group: 3
+    id_gender: "{{gender}}"
+    birthday: "{{birthday}}"
+    newsletter: "{{newsletter}}"
+    active: 1
+
+---
+name: updated_customer
+description: Template for generating updated customer data
+template:
+  firstname: "Updated"
+  lastname: "Customer"  
+  email: "updated.customer.1737540000000@example.com"
+  passwd: "UpdatedPass123!"
+  id_default_group: 3
+  id_gender: 2
+  birthday: "1995-06-15"
+  newsletter: 0
+  active: 1
+
+---
+name: prestashop_address_template
+description: Template for generating PrestaShop address data dynamically
+template:
+  address:
+    alias: "{{alias}}"
+    firstname: "{{firstName}}"
+    lastname: "{{lastName}}"
+    company: "{{company}}"
+    address1: "{{address1}}"
+    address2: "{{address2}}"
+    postcode: "{{postcode}}"
+    city: "{{city}}"
+    id_country: 21  # United States - adjust based on your setup
+    id_state: 1     # Adjust based on your setup
+    phone: "{{phone}}"
+    id_customer: "{{customerId}}"
+generators:
+  alias:
+    type: random
+    options:
+      type: string
+      values: ["Home", "Work", "Office", "Shipping", "Billing"]
+  firstName:
+    type: faker
+    options:
+      method: name.firstName
+  lastName:
+    type: faker
+    options:
+      method: name.lastName
+  company:
+    type: faker
+    options:
+      method: company.companyName
+  address1:
+    type: custom
+    customFunction: |
+      function(context) {
+        const streetNumber = Math.floor(Math.random() * 9999) + 1;
+        const streetNames = ['Main St', 'Oak Ave', 'Pine Rd', 'Elm Dr', 'Park Blvd', 'First St', 'Second Ave'];
+        const streetName = streetNames[Math.floor(Math.random() * streetNames.length)];
+        return `${streetNumber} ${streetName}`;
+      }
+  address2:
+    type: custom
+    customFunction: |
+      function(context) {
+        const hasAddress2 = Math.random() > 0.5;
+        if (!hasAddress2) return '';
+        const types = ['Apt', 'Suite', 'Unit', 'Floor'];
+        const type = types[Math.floor(Math.random() * types.length)];
+        const number = Math.floor(Math.random() * 100) + 1;
+        return `${type} ${number}`;
+      }
+  postcode:
+    type: random
+    options:
+      type: string
+      length: 5
+      charset: numeric
+  city:
+    type: random
+    options:
+      type: string
+      values: ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego"]
+  phone:
+    type: custom
+    customFunction: |
+      function(context) {
+        const areaCode = Math.floor(Math.random() * 900) + 100;
+        const exchange = Math.floor(Math.random() * 900) + 100;
+        const number = Math.floor(Math.random() * 9000) + 1000;
+        return `${areaCode}-${exchange}-${number}`;
+      }
+  customerId:
+    type: custom
+    customFunction: |
+      function(context) {
+        return context?.previousResponses?.createCustomer?.data?.id || 1;
+      }
+
+---
+name: prestashop_customer_with_address_template
+description: Template for generating complete customer with address data
+template:
+  customer:
+    firstname: "{{firstName}}"
+    lastname: "{{lastName}}"
+    email: "{{email}}"
+    passwd: "{{password}}"
+    id_default_group: 3
+    id_gender: "{{gender}}"
+    birthday: "{{birthday}}"
+    newsletter: "{{newsletter}}"
+    active: 1
+  address:
+    alias: "{{addressAlias}}"
+    firstname: "{{firstName}}"
+    lastname: "{{lastName}}"
+    company: "{{company}}"
+    address1: "{{address1}}"
+    address2: "{{address2}}"
+    postcode: "{{postcode}}"
+    city: "{{city}}"
+    id_country: 21
+    id_state: 1
+    phone: "{{phone}}"
+  ui_credentials:
+    email: "{{email}}"
+    password: "{{password}}"
+generators:
+  firstName:
+    type: faker
+    options:
+      method: name.firstName
+  lastName:
+    type: faker
+    options:
+      method: name.lastName
+  email:
+    type: custom
+    customFunction: |
+      function(context) {
+        const firstName = context?.variables?.firstName || 'user';
+        const lastName = context?.variables?.lastName || 'test';
+        const timestamp = Date.now();
+        return `${firstName.toLowerCase()}.${lastName.toLowerCase()}.${timestamp}@example.com`;
+      }
+  password:
+    type: custom
+    customFunction: |
+      function(context) {
+        const basePassword = 'TestPass';
+        const random = Math.floor(Math.random() * 1000);
+        return basePassword + random + '!';
+      }
+  gender:
+    type: random
+    options:
+      type: number
+      min: 1
+      max: 2
+  birthday:
+    type: custom
+    customFunction: |
+      function(context) {
+        const startYear = 1970;
+        const endYear = 2000;
+        const year = Math.floor(Math.random() * (endYear - startYear + 1)) + startYear;
+        const month = Math.floor(Math.random() * 12) + 1;
+        const day = Math.floor(Math.random() * 28) + 1;
+        return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      }
+  newsletter:
+    type: random
+    options:
+      type: number
+      min: 0
+      max: 1
+  addressAlias:
+    type: random
+    options:
+      type: string
+      values: ["Home", "Work", "Main"]
+  company:
+    type: faker
+    options:
+      method: company.companyName
+  address1:
+    type: custom
+    customFunction: |
+      function(context) {
+        const streetNumber = Math.floor(Math.random() * 9999) + 1;
+        const streetNames = ['Main St', 'Oak Ave', 'Pine Rd', 'Elm Dr', 'Park Blvd'];
+        const streetName = streetNames[Math.floor(Math.random() * streetNames.length)];
+        return `${streetNumber} ${streetName}`;
+      }
+  address2:
+    type: custom
+    customFunction: |
+      function(context) {
+        const hasAddress2 = Math.random() > 0.7;
+        if (!hasAddress2) return '';
+        const types = ['Apt', 'Suite', 'Unit'];
+        const type = types[Math.floor(Math.random() * types.length)];
+        const number = Math.floor(Math.random() * 100) + 1;
+        return `${type} ${number}`;
+      }
+  postcode:
+    type: random
+    options:
+      type: string
+      length: 5
+      charset: numeric
+  city:
+    type: random
+    options:
+      type: string
+      values: ["New York", "Los Angeles", "Chicago", "Houston", "Phoenix"]
+  phone:
+    type: custom
+    customFunction: |
+      function(context) {
+        const areaCode = Math.floor(Math.random() * 900) + 100;
+        const exchange = Math.floor(Math.random() * 900) + 100;
+        const number = Math.floor(Math.random() * 9000) + 1000;
+        return `${areaCode}-${exchange}-${number}`;
+      }

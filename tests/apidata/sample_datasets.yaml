@@ -1,0 +1,121 @@
+# PrestaShop Customer test data sets
+- name: prestashop_valid_customer
+  description: Valid customer data for PrestaShop API creation
+  tags: ["prestashop", "customers", "create", "positive", "api"]
+  environment: ["prestashop_local", "dev", "staging", "api"]
+  data:
+    customer:
+      firstname: "John"
+      lastname: "Doe"
+      email: "john.doe.test@example.com"
+      passwd: "TestPassword123!"
+      id_default_group: 3
+      id_gender: 1
+      birthday: "1990-01-01"
+      newsletter: 1
+      active: 1
+
+- name: prestashop_customer_with_address
+  description: Customer data with complete address for integrated testing
+  tags: ["prestashop", "customers", "address", "integrated", "positive"]
+  environment: ["prestashop_local", "dev", "staging", "api"]
+  data:
+    customer:
+      firstname: "Jane"
+      lastname: "Smith"
+      email: "jane.smith.test@example.com"
+      passwd: "TestPassword456!"
+      id_default_group: 3
+      id_gender: 2
+      birthday: "1985-05-15"
+      newsletter: 1
+      active: 1
+    address:
+      alias: "Home"
+      firstname: "Jane"
+      lastname: "Smith"
+      company: "Test Company"
+      address1: "123 Test Street"
+      address2: "Apt 4B"
+      postcode: "12345"
+      city: "Test City"
+      id_country: 21  # United States (you may need to adjust based on your PrestaShop setup)
+      id_state: 1     # You may need to adjust based on your setup
+      phone: "555-123-4567"
+
+- name: prestashop_invalid_customer_missing_email
+  description: Invalid customer data with missing email
+  tags: ["prestashop", "customers", "create", "negative", "api"]
+  environment: ["prestashop_local", "dev", "staging", "api"]
+  data:
+    customer:
+      firstname: "Invalid"
+      lastname: "User"
+      passwd: "TestPassword789!"
+      id_default_group: 3
+      id_gender: 1
+
+- name: prestashop_bulk_customers
+  description: Multiple customers for bulk operations testing
+  tags: ["prestashop", "customers", "bulk", "create"]
+  environment: ["prestashop_local", "dev", "api"]
+  data:
+    customers:
+      - firstname: "Alice"
+        lastname: "Johnson"
+        email: "alice.johnson.test@example.com"
+        passwd: "AlicePass123!"
+        id_default_group: 3
+        id_gender: 2
+        birthday: "1992-03-20"
+        newsletter: 1
+        active: 1
+      - firstname: "Bob"
+        lastname: "Wilson"
+        email: "bob.wilson.test@example.com"
+        passwd: "BobPass456!"
+        id_default_group: 3
+        id_gender: 1
+        birthday: "1988-07-10"
+        newsletter: 0
+        active: 1
+      - firstname: "Charlie"
+        lastname: "Brown"
+        email: "charlie.brown.test@example.com"
+        passwd: "CharliePass789!"
+        id_default_group: 3
+        id_gender: 1
+        birthday: "1995-12-05"
+        newsletter: 1
+        active: 1
+
+- name: prestashop_customer_for_ui_login
+  description: Customer specifically for UI login testing
+  tags: ["prestashop", "customers", "ui", "login", "integrated"]
+  environment: ["prestashop_local", "dev", "staging", "api"]
+  data:
+    customer:
+      firstname: "UITest"
+      lastname: "Customer"
+      email: "uitest.customer@example.com"
+      passwd: "UITestPass123!"
+      id_default_group: 3
+      id_gender: 1
+      birthday: "1990-06-15"
+      newsletter: 1
+      active: 1
+    # Login credentials for UI testing
+    ui_credentials:
+      email: "uitest.customer@example.com"
+      password: "UITestPass123!"
+
+- name: prestashop_customer_update_data
+  description: Data for updating existing customer
+  tags: ["prestashop", "customers", "update", "positive"]
+  environment: ["prestashop_local", "dev", "staging", "api"]
+  data:
+    customer:
+      firstname: "UpdatedFirstName"
+      lastname: "UpdatedLastName"
+      newsletter: 0
+      active: 1

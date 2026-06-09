@@ -1,0 +1,303 @@
+# PrestaShop Customer API Response Schema Validation
+name: prestashop_customer_schema
+description: Schema for validating PrestaShop customer API responses
+version: "1.0"
+
+schemas:
+  customer_response:
+    type: object
+    required:
+      - id
+      - firstname
+      - lastname
+      - email
+      - active
+    properties:
+      id:
+        oneOf:
+          - type: string
+            pattern: "^[0-9]+$"
+          - type: number
+            minimum: 1
+        description: "Unique customer identifier (can be string or number)"
+      firstname:
+        type: string
+        minLength: 1
+        maxLength: 255
+        description: "Customer's first name"
+      lastname:
+        type: string
+        minLength: 1
+        maxLength: 255
+        description: "Customer's last name"
+      email:
+        type: string
+        format: email
+        maxLength: 255
+        description: "Customer's email address"
+      passwd:
+        type: string
+        minLength: 5
+        description: "Customer's password (when provided)"
+      id_default_group:
+        oneOf:
+          - type: string
+            pattern: "^[0-9]+$"
+          - type: number
+            minimum: 1
+        description: "Default customer group ID (can be string or number)"
+      id_gender:
+        oneOf:
+          - type: string
+            enum: ["1", "2"]
+          - type: number
+            enum: [1, 2]
+        description: "Gender ID (1=male, 2=female, can be string or number)"
+      birthday:
+        type: string
+        description: "Customer's birthday in YYYY-MM-DD format"
+      newsletter:
+        oneOf:
+          - type: string
+            enum: ["0", "1"]
+          - type: number
+            enum: [0, 1]
+        description: "Newsletter subscription (0=no, 1=yes, can be string or number)"
+      active:
+        oneOf:
+          - type: string
+            enum: ["0", "1"]
+          - type: number
+            enum: [0, 1]
+        description: "Customer account status (0=inactive, 1=active, can be string or number)"
+      date_add:
+        type: string
+        description: "Customer creation date"
+      date_upd:
+        type: string
+        description: "Customer last update date"
+
+  customer_list_response:
+    type: object
+    required:
+      - customers
+    properties:
+      customers:
+        type: array
+        items:
+          type: object
+          required:
+            - id
+          properties:
+            id:
+              oneOf:
+                - type: string
+                  pattern: "^[0-9]+$"
+                - type: number
+                  minimum: 1
+              description: "Unique customer identifier (can be string or number)"
+            # PrestaShop list endpoints typically return minimal data
+            # Full customer data is retrieved via individual customer endpoints
+
+  customer_list_item:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        oneOf:
+          - type: string
+            pattern: "^[0-9]+$"
+          - type: number
+            minimum: 1
+        description: "Unique customer identifier (can be string or number)"
+      # List items contain minimal data only
+
+  customer_error_response:
+    type: object
+    required:
+      - errors
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          required:
+            - code
+            - message
+          properties:
+            code:
+              type: number
+              description: "Error code"
+            message:
+              type: string
+              description: "Error description"
+
+  address_response:
+    type: object
+    required:
+      - id
+      - alias
+      - firstname
+      - lastname
+      - address1
+      - postcode
+      - city
+      - id_country
+      - id_customer
+    properties:
+      id:
+        type: string
+        pattern: "^[0-9]+$"
+        description: "Unique address identifier (returned as string)"
+      alias:
+        type: string
+        minLength: 1
+        maxLength: 32
+        description: "Address alias (e.g., Home, Work)"
+      firstname:
+        type: string
+        minLength: 1
+        maxLength: 255
+        description: "First name for address"
+      lastname:
+        type: string
+        minLength: 1
+        maxLength: 255
+        description: "Last name for address"
+      company:
+        type: string
+        maxLength: 255
+        description: "Company name (optional)"
+      address1:
+        type: string
+        minLength: 1
+        maxLength: 255
+        description: "Primary address line"
+      address2:
+        type: string
+        maxLength: 255
+        description: "Secondary address line (optional)"
+      postcode:
+        type: string
+        minLength: 1
+        maxLength: 12
+        description: "Postal/ZIP code"
+      city:
+        type: string
+        minLength: 1
+        maxLength: 64
+        description: "City name"
+      id_country:
+        type: string
+        pattern: "^[0-9]+$"
+        description: "Country ID (returned as string)"
+      id_state:
+        type: string
+        pattern: "^[0-9]*$"
+        description: "State/Province ID (optional, returned as string)"
+      phone:
+        type: string
+        maxLength: 32
+        description: "Phone number (optional)"
+      id_customer:
+        type: string
+        pattern: "^[0-9]+$"
+        description: "Associated customer ID (returned as string)"
+
+# Validation rules for different scenarios
+validation_rules:
+  customer_creation:
+    - schema: customer_response
+    - required_fields: ["id", "firstname", "lastname", "email", "active"]
+    - custom_validations:
+        - email_format: true
+        - id_positive: true
+        - active_boolean_like: true
+
+  customer_retrieval:
+    - schema: customer_response
+    - required_fields: ["id", "firstname", "lastname", "email"]
+    - custom_validations:
+        - email_format: true
+        - id_positive: true
+
+  customer_update:
+    - schema: customer_response
+    - required_fields: ["id"]
+    - custom_validations:
+        - id_positive: true
+
+  customer_list:
+    - schema: customer_list_response
+    - custom_validations:
+        - array_not_empty: false  # Allow empty arrays
+
+  error_response:
+    - schema: customer_error_response
+    - required_fields: ["error", "message"]
+
+# API endpoint specific validation mappings
+endpoint_validations:
+  "POST /customers":
+    success: customer_creation
+    error: error_response
+  
+  "GET /customers/{id}":
+    success: customer_retrieval
+    error: error_response
+  
+  "PUT /customers/{id}":
+    success: customer_update
+    error: error_response
+  
+  "DELETE /customers/{id}":
+    success: null  # Delete typically returns empty response
+    error: error_response
+  
+  "GET /customers":
+    success: customer_list
+    error: error_response
+
+# Test data validation examples
+examples:
+  valid_customer:
+    id: 123
+    firstname: "John"
+    lastname: "Doe"
+    email: "john.doe@example.com"
+    passwd: "SecurePass123"
+    id_default_group: 3
+    id_gender: 1
+    birthday: "1990-01-01"
+    newsletter: 1
+    active: 1
+
+  invalid_customer_missing_email:
+    id: 124
+    firstname: "Jane"
+    lastname: "Smith"
+    active: 1
+    # Missing required email field
+
+  invalid_customer_bad_email:
+    id: 125
+    firstname: "Bob"
+    lastname: "Wilson"
+    email: "invalid-email"  # Invalid email format
+    active: 1
+
+  valid_address:
+    id: 456
+    alias: "Home"
+    firstname: "John"
+    lastname: "Doe"
+    company: "Test Company"
+    address1: "123 Main Street"
+    address2: "Apt 4B"
+    postcode: "12345"
+    city: "Test City"
+    id_country: 21
+    id_state: 1
+    phone: "555-123-4567"
+    id_customer: 123

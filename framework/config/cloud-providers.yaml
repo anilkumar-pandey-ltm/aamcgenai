@@ -1,0 +1,35 @@
+# Cloud provider specific settings
+# These are static configurations that rarely change
+
+browserstack:
+  # Test execution settings
+  screenResolution: "1920x1080"
+  recordVideo: true
+  recordScreenshots: true
+  maxDuration: 3600 # 1 hour timeout
+  debug: true
+  networkLogs: true
+  consoleLogs: "info" # Options: disable, errors, warnings, info, verbose
+  timezone: "UTC"
+  
+  # Framework settings
+  seleniumVersion: "4.0.0"
+  
+  # BrowserStack specific features
+  local: false # Set to true for local testing
+  acceptSslCerts: true
+
+saucelabs:
+  # Test execution settings
+  screenResolution: "1920x1080"
+  recordVideo: true
+  recordScreenshots: true
+  maxDuration: 3600 # 1 hour timeout
+  
+  # Default region
+  region: "eu-central-1" # Options: us-west-1, eu-central-1, apac-southeast-1
+    # Framework settings
+  tunnel: false # Set to true for Sauce Connect
+
+# Note: Local execution settings are managed in config.yaml
+# This file contains only cloud provider specific configurations
