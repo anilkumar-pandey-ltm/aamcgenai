@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDD Test Generation - Complete Architecture</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+            overflow-x: auto;
+        }
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        .diagram-wrapper {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            overflow-x: auto;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            min-width: 1400px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .info-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .info-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .info-card li {
+            padding: 8px 0;
+            color: #555;
+            line-height: 1.6;
+        }
+        .info-card li:before {
+            content: "▸ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .legend {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        .legend h3 {
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .legend-color {
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+            margin-right: 12px;
+        }
+        .legend-text {
+            color: #333;
+            font-weight: 500;
+        }
+        @media print {
+            body { background: white; }
+            .header { color: #333; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏗️ BDD Test Scenario Generation</h1>
+            <p>Complete End-to-End Architectural Workflow</p>
+        </div>
+
+        <div class="diagram-wrapper">
+            <div class="mermaid">
+graph TB
+    %% Input
+    Start([🎯 START<br/>User Provides Story ID<br/>Example: POCTC-143])
+    
+    %% Phase 1: Pre-Check
+    subgraph Phase1["⚡ PHASE 1: MCP SERVER VERIFICATION"]
+        P1A[🔍 Search Atlassian MCP Tools]
+        P1B{Atlassian MCP<br/>Running?}
+        P1C[✅ Atlassian Verified]
+        P1D[❌ Error: Start Server]
+        
+        P1E[🔍 Search Context MCP Tools]
+        P1F{Context MCP<br/>Running?}
+        P1G[✅ Context Verified]
+        P1H[🔄 Auto-Start Attempt]
+        
+        P1I[📋 Scan Workspace]
+        P1J{3 Context Files<br/>Available?}
+        P1K[✅ All Systems Ready]
+        
+        P1A --> P1B
+        P1B -->|YES| P1C --> P1E
+        P1B -->|NO| P1D --> Stop1([STOP])
+        P1E --> P1F
+        P1F -->|YES| P1G --> P1I
+        P1F -->|NO| P1H --> P1F
+        P1I --> P1J
+        P1J -->|YES| P1K
+        P1J -->|NO| Stop1
+    end
+    
+    %% Phase 2: Story Retrieval
+    subgraph Phase2["📥 PHASE 2: JIRA STORY RETRIEVAL"]
+        P2A{Story in<br/>Local Cache?}
+        P2B[💾 Read from Cache<br/>data/stories/JIRA_ID.txt]
+        P2C[🌐 Call JIRA API<br/>atlassian/jira_get_issue]
+        P2D{API Call<br/>Success?}
+        P2E[📝 Parse Response<br/>- Summary<br/>- Description<br/>- AC, BR<br/>- Personas]
+        P2F[💾 Save to Cache]
+        P2G[❌ JIRA Fetch Failed]
+        P2H[✅ Story Loaded]
+        
+        P2A -->|YES| P2B --> P2H
+        P2A -->|NO| P2C --> P2D
+        P2D -->|YES| P2E --> P2F --> P2B
+        P2D -->|NO| P2G --> Stop2([STOP])
+    end
+    
+    %% Phase 3: Context Loading
+    subgraph Phase3["📚 PHASE 3: CONTEXT DATA LOADING"]
+        P3A[📱 Load Application Context<br/>UI Elements & Workflows]
+        P3B[Extract:<br/>- Page names<br/>- Field labels<br/>- Button text<br/>- Validation messages<br/>- Navigation flows]
+        
+        P3C[🏗️ Load Domain Model<br/>Entities & Relationships]
+        P3D[Extract:<br/>- Entity names<br/>- Attributes<br/>- Enumerations<br/>- Data types<br/>- Relationships]
+        
+        P3E[📋 Load Business Rules<br/>Validations & Logic]
+        P3F[Extract:<br/>- Validation rules<br/>- Calculations<br/>- Business logic<br/>- Workflow rules<br/>- Constraints]
+        
+        P3G[🔗 Combine All Context Data]
+        
+        P3A --> P3B --> P3G
+        P3C --> P3D --> P3G
+        P3E --> P3F --> P3G
+    end
+    
+    %% Phase 4: Scenario Planning & Generation
+    subgraph Phase4["✍️ PHASE 4: SCENARIO PLANNING & GENERATION"]
+        P4A[📊 Plan Coverage Strategy<br/>Categories A-G]
+        
+        P4B[Category A: Workflow Paths<br/>E2E Persona Journeys]
+        P4C[Category B: Per-Page Validation<br/>Happy Path + Errors]
+        P4D[Category C: Decision Points<br/>All Branches]
+        P4E[Category D: Business Rules<br/>All Critical Rules]
+        P4F[Category E: Status Transitions<br/>Valid + Invalid]
+        P4G[Category F: API/Integrations<br/>Success + Failure]
+        P4H[Category G: RBAC<br/>Access Control]
+        
+        P4I[✏️ Write Gherkin Scenarios<br/>Feature, Background, Scenarios]
+        P4J[🔢 Create Examples Tables<br/>5-7 Rows with Real Data]
+        P4K[❌ Add Negative Scenarios<br/>Errors, Edge Cases, Exceptions]
+        
+        P4A --> P4B & P4C & P4D & P4E & P4F & P4G & P4H
+        P4B & P4C & P4D & P4E & P4F & P4G & P4H --> P4I
+        P4I --> P4J --> P4K
+    end
+    
+    %% Phase 5: Validation
+    subgraph Phase5["🎯 PHASE 5: QUALITY VALIDATION"]
+        P5A{AC Coverage<br/>= 100%?}
+        P5B{BR Coverage<br/>= 100%?}
+        P5C{Scenario Outline<br/>≥ 80%?}
+        P5D{Avg Examples<br/>≥ 5?}
+        P5E{Test Categories<br/>≥ 5 of 7?}
+        P5F[📊 Calculate Quality Score<br/>AC×30 + BR×25 + Outline×20<br/>+ Examples×15 + Categories×10]
+        P5G{Quality Score<br/>≥ 85?}
+        P5H[🔄 Generate Additional Scenarios]
+        
+        P5A -->|YES| P5B
+        P5A -->|NO| P5H --> P4I
+        P5B -->|YES| P5C
+        P5B -->|NO| P5H
+        P5C -->|YES| P5D
+        P5C -->|NO| P5H
+        P5D -->|YES| P5E
+        P5D -->|NO| P5H
+        P5E -->|YES| P5F
+        P5E -->|NO| P5H
+        P5F --> P5G
+        P5G -->|NO| P5H
+    end
+    
+    %% Phase 6: Save Output
+    subgraph Phase6["💾 PHASE 6: SAVE & REPORT"]
+        P6A[📄 Format Feature File<br/>Add Metadata & Traceability]
+        P6B[💾 Save to Output Directory<br/>Output/testcases/GenAI_generated/]
+        P6C[📊 Generate Coverage Report<br/>- Total Scenarios<br/>- Coverage Matrix<br/>- Quality Metrics]
+        P6D[✅ Generation Complete]
+        
+        P6A --> P6B --> P6C --> P6D
+    end
+    
+    %% Output
+    End([🎉 END<br/>Production-Ready Feature File<br/>25-40 Scenarios | Quality ≥85])
+    
+    %% Main Flow
+    Start --> Phase1
+    P1K --> Phase2
+    P2H --> Phase3
+    P3G --> Phase4
+    P4K --> Phase5
+    P5G -->|YES| Phase6
+    P6D --> End
+    
+    %% Styling
+    classDef startEndStyle fill:#e1f5e1,stroke:#4caf50,stroke-width:4px,color:#000
+    classDef stopStyle fill:#ffcdd2,stroke:#d32f2f,stroke-width:3px,color:#000
+    classDef successStyle fill:#c8e6c9,stroke:#388e3c,stroke-width:3px,color:#000
+    classDef errorStyle fill:#ffcdd2,stroke:#d32f2f,stroke-width:2px,color:#000
+    classDef processStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:2px,color:#000
+    classDef decisionStyle fill:#fff9c4,stroke:#f57c00,stroke-width:2px,color:#000
+    
+    class Start,End startEndStyle
+    class Stop1,Stop2 stopStyle
+    class P1C,P1G,P1K,P2H,P6D successStyle
+    class P1D,P2G errorStyle
+    class P5A,P5B,P5C,P5D,P5E,P5G,P1B,P1F,P1J,P2A,P2D decisionStyle
+    
+    style Phase1 fill:#ffe1e1,stroke:#f44336,stroke-width:3px
+    style Phase2 fill:#fff4e1,stroke:#ff9800,stroke-width:3px
+    style Phase3 fill:#e1f5ff,stroke:#2196f3,stroke-width:3px
+    style Phase4 fill:#e1ffe1,stroke:#4caf50,stroke-width:3px
+    style Phase5 fill:#f5e1ff,stroke:#9c27b0,stroke-width:3px
+    style Phase6 fill:#fff9e1,stroke:#ffc107,stroke-width:3px
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>⚡ Phase 1: Server Verification</h3>
+                <ul>
+                    <li><strong>Purpose:</strong> Ensure all required services are running</li>
+                    <li><strong>Checks:</strong> Atlassian MCP Server for JIRA</li>
+                    <li><strong>Checks:</strong> Context MCP Server for application data</li>
+                    <li><strong>Validates:</strong> 3 context files (app, domain, rules)</li>
+                    <li><strong>Action:</strong> Auto-start Context server if needed</li>
+                    <li><strong>Exit Criteria:</strong> Both servers running + files verified</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>📥 Phase 2: Story Retrieval</h3>
+                <ul>
+                    <li><strong>Purpose:</strong> Load JIRA story with caching</li>
+                    <li><strong>Cache Location:</strong> data/stories/JIRA_{ID}.txt</li>
+                    <li><strong>API:</strong> atlassian/jira_get_issue for live fetch</li>
+                    <li><strong>Extracts:</strong> Summary, description, AC, BR, personas</li>
+                    <li><strong>Saves:</strong> Parsed story to cache for reuse</li>
+                    <li><strong>Exit Criteria:</strong> Story data loaded and parsed</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>📚 Phase 3: Context Loading</h3>
+                <ul>
+                    <li><strong>Purpose:</strong> Load real application data for scenarios</li>
+                    <li><strong>Application Context:</strong> Pages, fields, buttons, messages</li>
+                    <li><strong>Domain Model:</strong> Entities, attributes, relationships</li>
+                    <li><strong>Business Rules:</strong> Validations, calculations, logic</li>
+                    <li><strong>Usage:</strong> Provides real data instead of placeholders</li>
+                    <li><strong>Exit Criteria:</strong> All 3 context files parsed</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>✍️ Phase 4: Scenario Generation</h3>
+                <ul>
+                    <li><strong>Purpose:</strong> Generate comprehensive BDD scenarios</li>
+                    <li><strong>Planning:</strong> Map coverage across 7 categories (A-G)</li>
+                    <li><strong>Writing:</strong> Create Gherkin with Feature, Background</li>
+                    <li><strong>Data-Driven:</strong> 80%+ Scenario Outline with Examples</li>
+                    <li><strong>Examples:</strong> 5-7 rows per table with real data</li>
+                    <li><strong>Negatives:</strong> Add errors, edge cases, exceptions</li>
+                    <li><strong>Exit Criteria:</strong> 25-40 scenarios generated</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>🎯 Phase 5: Quality Validation</h3>
+                <ul>
+                    <li><strong>Purpose:</strong> Ensure quality thresholds met</li>
+                    <li><strong>AC Coverage:</strong> 100% all acceptance criteria</li>
+                    <li><strong>BR Coverage:</strong> 100% critical/high business rules</li>
+                    <li><strong>Scenario Outline:</strong> ≥80% data-driven scenarios</li>
+                    <li><strong>Examples:</strong> ≥5 average per Examples table</li>
+                    <li><strong>Categories:</strong> ≥5 of 7 test categories covered</li>
+                    <li><strong>Quality Score:</strong> ≥85 out of 100</li>
+                    <li><strong>Loop:</strong> Regenerate if score < 85</li>
+                </ul>
+            </div>
+
+            <div class="info-card">
+                <h3>💾 Phase 6: Save & Report</h3>
+                <ul>
+                    <li><strong>Purpose:</strong> Finalize and save feature file</li>
+                    <li><strong>Metadata:</strong> Add AC/BR traceability mapping</li>
+                    <li><strong>Metrics:</strong> Include quality score and coverage</li>
+                    <li><strong>Location:</strong> Output/testcases/GenAI_generated/</li>
+                    <li><strong>Format:</strong> {STORY_ID}_bdd.feature</li>
+                    <li><strong>Report:</strong> Coverage matrix and statistics</li>
+                    <li><strong>Exit Criteria:</strong> File saved successfully</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>🎨 Diagram Legend</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ffe1e1;"></div>
+                    <div class="legend-text">Phase 1: Server Verification</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fff4e1;"></div>
+                    <div class="legend-text">Phase 2: Story Retrieval</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e1f5ff;"></div>
+                    <div class="legend-text">Phase 3: Context Loading</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e1ffe1;"></div>
+                    <div class="legend-text">Phase 4: Generation</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f5e1ff;"></div>
+                    <div class="legend-text">Phase 5: Validation</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fff9e1;"></div>
+                    <div class="legend-text">Phase 6: Save & Report</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fff9c4;"></div>
+                    <div class="legend-text">Decision Points</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #c8e6c9;"></div>
+                    <div class="legend-text">Success/Complete</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #ffcdd2;"></div>
+                    <div class="legend-text">Error/Stop</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="legend">
+            <h3>📊 Test Coverage Categories (A-G)</h3>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <div class="legend-text"><strong>A.</strong> Workflow Paths - End-to-end persona journeys</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-text"><strong>B.</strong> Per-Page Validation - Happy path + field validations</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-text"><strong>C.</strong> Decision Points - Dropdowns, conditionals, branches</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-text"><strong>D.</strong> Business Rules - Validations, calculations, constraints</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-text"><strong>E.</strong> Status Transitions - Valid & invalid workflow states</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-text"><strong>F.</strong> API/Integrations - External API success & failure</div>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-text"><strong>G.</strong> Role-Based Access - Permission-based scenarios</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 15,
+                nodeSpacing: 50,
+                rankSpacing: 60
+            },
+            themeVariables: {
+                fontSize: '14px',
+                fontFamily: 'Segoe UI, Arial'
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+Title: Browse Products by Category
+
+Story Description:
+As a customer, I want to browse products by category so that I can easily find items I am interested in.
+
+Acceptance Criteria:
+- Categories are clearly listed on the homepage and product pages.
+- Clicking a category displays only products within that category.
+- Subcategories (if any) are displayed and navigable.
+- The number of products in each category is shown.

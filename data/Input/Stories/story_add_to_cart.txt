@@ -1,0 +1,10 @@
+Title: Add Products to Cart
+
+Story Description:
+As a customer, I want to add products to my shopping cart so that I can purchase multiple items in one order.
+
+Acceptance Criteria:
+- Each product page has an 'Add to Cart' button.
+- Cart icon updates with the number of items added.
+- User can add multiple quantities of the same product.
+- Confirmation message is shown after adding to cart.

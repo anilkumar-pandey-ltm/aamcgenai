@@ -1,0 +1,70 @@
+# Framework Path Configuration for Copilot Agents
+# This file centralizes framework-specific paths used across custom agent files
+# Reference these variables in agent files instead of hardcoding paths
+# Note: src/, .github/, and prompt paths should remain static in agent files
+
+# YAML Generation paths
+yaml_generation:
+  base: "Output"
+  temp_dom: "Output/yamlGeneration/Temp_DOM"
+  temp_dom_backup: "Output/yamlGeneration/Temp_DOM/Chunks_Backup"
+  original_source: "Output/yamlGeneration/Temp_DOM/original_page_source.html"
+  cleaned_source: "Output/yamlGeneration/Temp_DOM/cleaned_page_source.html"
+  chunk_pattern: "Output/yamlGeneration/Temp_DOM/html_chunk_{X}.html"
+
+# Page object paths
+page_object:
+  base: "Output"
+  chunk_pattern: "Output/page-object/chunk_{X}_locators.yaml"
+  iteration_pattern: "Output/page-object/iteration_{X}_locators.yaml"
+
+# Data paths
+data_paths:
+  stories: "data/stories"
+  context: "data/context"
+  context_application: "data/context/application"
+  context_business_rules: "data/context/business_rules"
+  context_domain: "data/context/domain"
+  demo: "data/demo"
+
+# Framework configuration
+framework_paths:
+  config: "framework/config"
+  core: "framework/core"
+  utils: "framework/utils"
+  services: "framework/services"
+  api: "framework/api"
+
+# Page actions
+page_actions:
+  base: "Output/page-actions"
+
+# Output paths
+output_paths:
+  impact_report: "Output/impact_report"
+  api_stepdefs: "Output/tests/stepdefs/api_stepdefs"
+
+# Test paths
+test_paths:
+  testcases: "Output/testcases"
+  stepdefs: "Output/stepdefs"
+  api_output: "Output/api_output"
+  video_analysis: "Output/video_analysis_output"
+  apidata: "Output/apidata"
+  serviceclient: "Output/serviceclient"
+
+# Feature files
+feature_paths:
+  base: "Output"
+  api: "Output/Feature/API"
+  web: "Output/Feature/web"
+  api_testcases: "Output/Feature/API_Testcases"
+
+# Input paths
+input_paths:
+  base: "data"
+  stories: "data/stories"
+  api_collections: "data/api_collections"
+  cr: "data/cr"
+  defects: "data/defects"
+  tcs_dump: "data/tcs_dump"

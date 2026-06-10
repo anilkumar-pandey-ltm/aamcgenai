@@ -1,0 +1,205 @@
+{
+  "change_requests": [
+    {
+      "id": "CR001",
+      "title": "Enhanced Product Search with Voice Recognition",
+      "description": "Implement voice search functionality that allows users to search for products using voice commands. The system should convert speech to text and then perform the search operation using existing search algorithms.",
+      "type": "feature",
+      "priority": "high",
+      "business_justification": "Improve user experience and accessibility, especially for mobile users. Expected to increase search usage by 25%.",
+      "technical_details": {
+        "components_affected": [
+          "search engine",
+          "user interface",
+          "mobile application"
+        ],
+        "new_dependencies": [
+          "speech recognition API",
+          "audio processing libraries"
+        ],
+        "integration_points": [
+          "existing search functionality",
+          "product catalog",
+          "user session management"
+        ]
+      },
+      "acceptance_criteria": [
+        "Users can activate voice search from search bar",
+        "Voice input is accurately converted to text",
+        "Search results match voice query intent",
+        "Voice search works on mobile and desktop",
+        "Fallback to text search if voice fails"
+      ],
+      "risk_factors": [
+        "new technology integration",
+        "cross-platform compatibility",
+        "performance impact on search"
+      ]
+    },
+    {
+      "id": "CR002", 
+      "title": "Shopping Cart Discount Code Integration",
+      "description": "Integrate discount code functionality directly into the shopping cart where users can apply promotional codes, view discount calculations, and see updated totals in real-time.",
+      "type": "enhancement",
+      "priority": "medium",
+      "business_justification": "Increase conversion rates by making discount application more intuitive. Expected to reduce cart abandonment by 15%.",
+      "technical_details": {
+        "components_affected": [
+          "shopping cart module",
+          "pricing engine",
+          "checkout process"
+        ],
+        "existing_dependencies": [
+          "product pricing service",
+          "tax calculation service",
+          "promotional campaigns database"
+        ],
+        "integration_points": [
+          "cart total calculations",
+          "checkout flow",
+          "order processing"
+        ]
+      },
+      "acceptance_criteria": [
+        "Discount code input field visible in cart",
+        "Real-time validation of discount codes",
+        "Automatic calculation of discounts",
+        "Clear display of original and discounted prices",
+        "Integration with existing checkout flow"
+      ],
+      "risk_factors": [
+        "pricing calculation accuracy",
+        "impact on checkout performance",
+        "integration with existing promotions"
+      ]
+    },
+    {
+      "id": "CR003",
+      "title": "Category Navigation Performance Optimization",
+      "description": "Optimize the category browsing system to improve page load times and implement lazy loading for product images. Add breadcrumb navigation and improve filtering performance.",
+      "type": "enhancement", 
+      "priority": "medium",
+      "business_justification": "Improve user experience and reduce bounce rates. Target 40% improvement in page load times for category pages.",
+      "technical_details": {
+        "components_affected": [
+          "category navigation system",
+          "product listing pages",
+          "image loading service",
+          "filtering system"
+        ],
+        "optimization_areas": [
+          "database query optimization",
+          "image loading strategy",
+          "caching implementation",
+          "frontend performance"
+        ],
+        "integration_points": [
+          "product catalog service",
+          "search functionality",
+          "user session tracking"
+        ]
+      },
+      "acceptance_criteria": [
+        "Category pages load within 2 seconds",
+        "Breadcrumb navigation shows current location", 
+        "Images load progressively as user scrolls",
+        "Filtering maintains good performance",
+        "Navigation maintains current functionality"
+      ],
+      "risk_factors": [
+        "potential impact on existing functionality",
+        "database performance changes",
+        "cross-browser compatibility"
+      ]
+    },
+    {
+      "id": "CR004",
+      "title": "Payment Gateway Security Update",
+      "description": "Update payment processing to support new PCI DSS compliance requirements and integrate additional fraud detection mechanisms. Implement 3D Secure authentication for credit card transactions.",
+      "type": "security",
+      "priority": "critical",
+      "business_justification": "Mandatory compliance requirement. Failure to implement will result in inability to process credit card payments.",
+      "technical_details": {
+        "components_affected": [
+          "payment gateway integration",
+          "checkout process",
+          "fraud detection system",
+          "user authentication"
+        ],
+        "security_enhancements": [
+          "PCI DSS 4.0 compliance",
+          "3D Secure 2.0 implementation", 
+          "enhanced fraud detection",
+          "secure token management"
+        ],
+        "integration_points": [
+          "existing payment methods",
+          "order processing workflow",
+          "customer account management"
+        ]
+      },
+      "acceptance_criteria": [
+        "All payment processing meets PCI DSS 4.0 requirements",
+        "3D Secure authentication for eligible cards",
+        "Enhanced fraud detection without impacting user experience",
+        "Secure handling of payment credentials",
+        "Backward compatibility with existing orders"
+      ],
+      "risk_factors": [
+        "critical security implications",
+        "potential payment processing disruption",
+        "regulatory compliance requirements",
+        "integration complexity"
+      ]
+    },
+    {
+      "id": "CR005",
+      "title": "Mobile App Cart Synchronization Bug Fix",
+      "description": "Fix critical bug where shopping cart items are not synchronizing correctly between mobile app and web platform, causing users to lose items when switching between platforms.",
+      "type": "bugfix",
+      "priority": "high", 
+      "business_justification": "Critical user experience issue affecting customer retention. Currently impacting 12% of mobile users.",
+      "technical_details": {
+        "components_affected": [
+          "mobile application",
+          "web platform",
+          "cart synchronization service",
+          "user session management"
+        ],
+        "bug_details": {
+          "symptoms": [
+            "cart items disappear when switching platforms",
+            "duplicate items appear in some cases", 
+            "cart totals don't match between platforms"
+          ],
+          "root_cause": "race condition in cart sync API",
+          "affected_platforms": ["iOS app", "Android app", "web browser"]
+        },
+        "integration_points": [
+          "user authentication system",
+          "cart persistence layer",
+          "real-time sync mechanisms"
+        ]
+      },
+      "acceptance_criteria": [
+        "Cart contents remain consistent across all platforms",
+        "Real-time synchronization when user switches platforms",
+        "No duplicate or missing items",
+        "Cart totals match across platforms",
+        "Works for both logged-in and guest users"
+      ],
+      "risk_factors": [
+        "affects multiple platforms simultaneously",
+        "potential impact on user sessions",
+        "data consistency requirements"
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "created_date": "2025-08-20",
+    "created_by": "Impact Testing System",
+    "last_updated": "2025-08-20",
+    "total_requests": 5
+  }
+}

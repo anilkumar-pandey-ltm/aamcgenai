@@ -1,0 +1,419 @@
+Project: E-Commerce Platform (ECOM)
+Export Date: 12/Sep/2025 09:45
+Exported By: Project Administrator
+Export Version: JIRA v9.5.0
+Total Issues: 15
+=================================================
+
+ISSUE TYPE: Epic
+KEY: ECOM-001
+SUMMARY: User Account Management
+STATUS: In Progress
+PRIORITY: High
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: David Chen (Tech Lead)
+CREATED: 10/Aug/2025
+UPDATED: 05/Sep/2025
+COMPONENTS: User Service, Authentication, Profile Management
+LABELS: core-functionality, user-experience
+EPIC LINK: N/A
+SPRINT: Sprint 1, Sprint 2
+STORY POINTS: 13
+DESCRIPTION: Implement comprehensive user account management functionality including registration, authentication, profile management, and account settings. This epic covers all user identity and preference management features.
+ACCEPTANCE CRITERIA:
+* Users can register with email or social login
+* Users can update their profile information
+* Password reset functionality works correctly
+* Users can manage notification preferences
+* Account deletion complies with data regulations
+BUSINESS VALUE: High - Core platform functionality that impacts all users
+TECHNICAL DEBT: Medium - Authentication system needs to support future identity providers
+DEPENDENCIES: Integration with email service, social login providers
+AFFECTED MODULES: User Service, Profile Service, Authentication Service, Frontend Components
+
+ISSUE TYPE: Story
+KEY: ECOM-101
+SUMMARY: Add Products to Cart
+STATUS: Done
+PRIORITY: High
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Mike Wilson (Frontend Developer)
+CREATED: 15/Aug/2025
+UPDATED: 28/Aug/2025
+COMPONENTS: Shopping Cart, Product Pages, UI Components
+LABELS: core-functionality, user-flow
+EPIC LINK: ECOM-004
+SPRINT: Sprint 1
+STORY POINTS: 5
+DESCRIPTION: As a customer, I want to add products to my shopping cart so that I can purchase multiple items in one order. The cart should update in real-time and provide immediate feedback.
+ACCEPTANCE CRITERIA:
+* Each product page has an 'Add to Cart' button clearly visible
+* Users can specify quantity before adding to cart
+* Cart icon updates with number of items added
+* Success message confirms when item is added
+* Cart maintains state during the entire shopping session
+BUSINESS VALUE: Critical - Directly impacts conversion rate and sales
+TECHNICAL DEBT: Low - Built on new cart service architecture
+DEPENDENCIES: Product Service API, Cart Service API
+AFFECTED MODULES: Frontend, Cart Service, Product Service
+IMPLEMENTATION DETAILS: Uses React context for cart state management, connects to RESTful Cart Service API
+
+ISSUE TYPE: Story
+KEY: ECOM-102
+SUMMARY: Browse Products by Category
+STATUS: Done
+PRIORITY: High
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Lisa Park (Frontend Developer)
+CREATED: 16/Aug/2025
+UPDATED: 30/Aug/2025
+COMPONENTS: Product Catalog, Navigation, Search Service
+LABELS: core-functionality, user-experience
+EPIC LINK: ECOM-003
+SPRINT: Sprint 1
+STORY POINTS: 8
+DESCRIPTION: As a customer, I want to browse products by category so that I can easily find items I am interested in without having to use the search function.
+ACCEPTANCE CRITERIA:
+* Categories are displayed in a hierarchical navigation menu
+* Clicking a category filters products to show only relevant items
+* Category pages include sorting options (price, popularity, rating)
+* Subcategories are accessible from parent category pages
+* Category breadcrumbs show current navigation path
+BUSINESS VALUE: High - Improves product discovery and browsing experience
+TECHNICAL DEBT: Medium - Categories structure needs optimization for scale
+DEPENDENCIES: Product Catalog Service, Search Service
+AFFECTED MODULES: Frontend, Catalog Service, Search Service
+IMPLEMENTATION DETAILS: Implements lazy loading for category pages, uses Redis for category caching
+
+ISSUE TYPE: Story
+KEY: ECOM-103
+SUMMARY: Checkout and Payment Process
+STATUS: In Progress
+PRIORITY: Critical
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: James Rodriguez (Full Stack Developer)
+CREATED: 18/Aug/2025
+UPDATED: 10/Sep/2025
+COMPONENTS: Checkout, Payment Gateway, Order Management
+LABELS: core-functionality, revenue-critical
+EPIC LINK: ECOM-005
+SPRINT: Sprint 2
+STORY POINTS: 13
+DESCRIPTION: As a customer, I want to complete my purchase through a streamlined checkout process with multiple payment options so that I can finalize my order quickly and securely.
+ACCEPTANCE CRITERIA:
+* Checkout process has clear steps with progress indication
+* Multiple payment methods are supported (credit card, PayPal, etc.)
+* Order summary shows all items, quantities, and costs before payment
+* Shipping options and costs are clearly presented
+* Order confirmation is displayed after successful payment
+* Confirmation email is sent automatically
+BUSINESS VALUE: Critical - Direct revenue impact and conversion completion
+TECHNICAL DEBT: Low - Using industry-standard payment integrations
+DEPENDENCIES: Payment Gateway API, Order Service, Email Service
+AFFECTED MODULES: Checkout Service, Payment Service, Order Service, Email Service
+IMPLEMENTATION DETAILS: Implements PCI-compliant payment processing, uses microservice architecture for payment orchestration
+
+ISSUE TYPE: Story
+KEY: ECOM-104
+SUMMARY: Search for Products
+STATUS: Done
+PRIORITY: High
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Alex Thompson (Backend Developer)
+CREATED: 17/Aug/2025
+UPDATED: 02/Sep/2025
+COMPONENTS: Search Service, Product Catalog, Frontend
+LABELS: core-functionality, user-experience
+EPIC LINK: ECOM-003
+SPRINT: Sprint 1
+STORY POINTS: 8
+DESCRIPTION: As a customer, I want to search for products using keywords so that I can quickly find specific items without browsing through categories.
+ACCEPTANCE CRITERIA:
+* Search bar is prominently displayed on all pages
+* Search results are accurate and relevant to keywords
+* Autocomplete suggestions appear while typing
+* Search supports filtering by category, price range, etc.
+* No results state provides helpful suggestions
+* Search history is saved for logged-in users
+BUSINESS VALUE: High - Critical path for product discovery
+TECHNICAL DEBT: Medium - Search indexing needs optimization
+DEPENDENCIES: Product Catalog Service, Elasticsearch
+AFFECTED MODULES: Search Service, Frontend, Product Catalog Service
+IMPLEMENTATION DETAILS: Uses Elasticsearch for full-text search, implements typeahead suggestions using Redis
+
+ISSUE TYPE: Story
+KEY: ECOM-105
+SUMMARY: User Registration and Login
+STATUS: Done
+PRIORITY: Critical
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Maria Garcia (Backend Developer)
+CREATED: 12/Aug/2025
+UPDATED: 25/Aug/2025
+COMPONENTS: User Service, Authentication, Frontend
+LABELS: core-functionality, security
+EPIC LINK: ECOM-001
+SPRINT: Sprint 1
+STORY POINTS: 8
+DESCRIPTION: As a visitor, I want to create an account and log in so that I can access personalized features and save my information for future purchases.
+ACCEPTANCE CRITERIA:
+* Registration form collects necessary user information
+* Email verification is required to activate account
+* Login supports email/password and social login options
+* Password requirements follow security best practices
+* Forgot password functionality is available
+* User receives welcome email upon registration
+BUSINESS VALUE: Critical - Gateway to personalized experience and customer data collection
+TECHNICAL DEBT: Low - Built on robust authentication framework
+DEPENDENCIES: Email Service, Social Login Providers
+AFFECTED MODULES: User Service, Authentication Service, Frontend
+IMPLEMENTATION DETAILS: Uses OAuth 2.0 for authentication, implements JWT for session management
+
+ISSUE TYPE: Story
+KEY: ECOM-106
+SUMMARY: View and Manage User Profile
+STATUS: Done
+PRIORITY: Medium
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Chris Williams (Frontend Developer)
+CREATED: 14/Aug/2025
+UPDATED: 27/Aug/2025
+COMPONENTS: User Service, Profile Management, Frontend
+LABELS: user-experience, personalization
+EPIC LINK: ECOM-001
+SPRINT: Sprint 1
+STORY POINTS: 5
+DESCRIPTION: As a registered user, I want to view and edit my profile information so that I can keep my personal details and preferences up to date.
+ACCEPTANCE CRITERIA:
+* Profile page displays all user information clearly
+* Users can edit contact information, shipping addresses, and preferences
+* Changes are saved immediately and confirmed to the user
+* Password change requires current password verification
+* Users can manage communication preferences
+BUSINESS VALUE: Medium - Improves user data accuracy and personalization
+TECHNICAL DEBT: Low - Using standardized profile management components
+DEPENDENCIES: User Service, Authentication Service
+AFFECTED MODULES: User Service, Frontend, Profile Management
+IMPLEMENTATION DETAILS: Implements form validation on both client and server sides, uses React hooks for state management
+
+ISSUE TYPE: Story
+KEY: ECOM-107
+SUMMARY: View Order History and Details
+STATUS: In Progress
+PRIORITY: Medium
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Ryan Lee (Full Stack Developer)
+CREATED: 20/Aug/2025
+UPDATED: 08/Sep/2025
+COMPONENTS: Order Management, User Profile, Frontend
+LABELS: user-experience, post-purchase
+EPIC LINK: ECOM-006
+SPRINT: Sprint 2
+STORY POINTS: 5
+DESCRIPTION: As a registered user, I want to view my order history and details so that I can track past purchases and reorder items if needed.
+ACCEPTANCE CRITERIA:
+* Order history page shows all past orders in chronological order
+* Each order displays date, total, status, and basic details
+* Detailed view shows complete order information including items, quantities, prices
+* Users can filter or search through order history
+* Order status updates in real-time
+* Order details can be downloaded as PDF
+BUSINESS VALUE: Medium - Improves post-purchase experience and encourages repeat purchases
+TECHNICAL DEBT: Low - Built on existing order management system
+DEPENDENCIES: Order Service, PDF Generation Service
+AFFECTED MODULES: Order Service, Frontend, User Profile Service
+IMPLEMENTATION DETAILS: Uses pagination for order history, implements real-time status updates via WebSockets
+
+ISSUE TYPE: Story
+KEY: ECOM-108
+SUMMARY: Product Reviews and Ratings
+STATUS: To Do
+PRIORITY: Medium
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Unassigned
+CREATED: 25/Aug/2025
+UPDATED: 05/Sep/2025
+COMPONENTS: Product Catalog, User Reviews, Frontend
+LABELS: user-generated-content, social-proof
+EPIC LINK: ECOM-007
+SPRINT: Sprint 3
+STORY POINTS: 8
+DESCRIPTION: As a customer, I want to read and write product reviews so that I can make informed purchasing decisions and share my experience with others.
+ACCEPTANCE CRITERIA:
+* Product pages display average rating and review count
+* Reviews are paginated and sortable by date, rating, etc.
+* Verified purchasers have special badges on their reviews
+* Users can rate products on a 5-star scale
+* Review form includes text area for detailed feedback and photo upload option
+* Admin moderation tools for inappropriate content
+BUSINESS VALUE: Medium - Increases conversion through social proof
+TECHNICAL DEBT: Medium - Requires moderation system and content filtering
+DEPENDENCIES: Product Catalog Service, User Service, Image Storage Service
+AFFECTED MODULES: Product Service, Review Service, Frontend
+IMPLEMENTATION DETAILS: Implements sentiment analysis for review highlights, uses image compression for review photos
+
+ISSUE TYPE: Story
+KEY: ECOM-109
+SUMMARY: Wishlist Management
+STATUS: To Do
+PRIORITY: Low
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Unassigned
+CREATED: 27/Aug/2025
+UPDATED: 05/Sep/2025
+COMPONENTS: User Profile, Product Catalog, Frontend
+LABELS: user-experience, engagement
+EPIC LINK: ECOM-008
+SPRINT: Sprint 3
+STORY POINTS: 5
+DESCRIPTION: As a customer, I want to save products to a wishlist so that I can remember items I'm interested in but not ready to purchase yet.
+ACCEPTANCE CRITERIA:
+* "Add to Wishlist" button appears on product tiles and product pages
+* Wishlist is accessible from user account menu
+* Users can move items from wishlist to cart with one click
+* Wishlist persists across sessions for logged-in users
+* Users can create multiple named wishlists
+* Share wishlist functionality via email or link
+BUSINESS VALUE: Low - Improves engagement and potential future conversions
+TECHNICAL DEBT: Low - Simple extension of user preferences
+DEPENDENCIES: User Service, Product Catalog Service
+AFFECTED MODULES: User Service, Frontend, Product Service
+IMPLEMENTATION DETAILS: Uses localStorage for guest wishlists, database storage for registered users
+
+ISSUE TYPE: Story
+KEY: ECOM-110
+SUMMARY: Product Recommendations
+STATUS: To Do
+PRIORITY: Medium
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Unassigned
+CREATED: 29/Aug/2025
+UPDATED: 05/Sep/2025
+COMPONENTS: Recommendation Engine, Product Catalog, Frontend
+LABELS: personalization, upsell
+EPIC LINK: ECOM-009
+SPRINT: Sprint 3
+STORY POINTS: 8
+DESCRIPTION: As a customer, I want to see personalized product recommendations based on my browsing history and preferences so that I can discover relevant items I might be interested in.
+ACCEPTANCE CRITERIA:
+* Recommendations appear on home page, product pages, and cart page
+* Different recommendation types: "Frequently bought together", "You might also like", "Based on your browsing"
+* Recommendations update in real-time based on user behavior
+* Fallback to popular items for new users with no history
+* Admin can configure recommendation algorithms and placement
+BUSINESS VALUE: Medium - Increases average order value and discovery
+TECHNICAL DEBT: High - Requires machine learning infrastructure
+DEPENDENCIES: Product Catalog Service, User Behavior Tracking, ML Pipeline
+AFFECTED MODULES: Recommendation Service, Frontend, Analytics Service
+IMPLEMENTATION DETAILS: Uses collaborative filtering algorithm, implements A/B testing framework for algorithm comparison
+
+ISSUE TYPE: Story
+KEY: ECOM-111
+SUMMARY: User Loyalty Program
+STATUS: To Do
+PRIORITY: Medium
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Unassigned
+CREATED: 01/Sep/2025
+UPDATED: 05/Sep/2025
+COMPONENTS: User Service, Loyalty Program, Frontend
+LABELS: user-retention, monetization
+EPIC LINK: ECOM-010
+SPRINT: Backlog
+STORY POINTS: 13
+DESCRIPTION: As a customer, I want to earn and redeem loyalty points for purchases so that I can get rewards for being a repeat customer.
+ACCEPTANCE CRITERIA:
+* Users automatically earn points based on purchase amount
+* Points balance is visible in user account dashboard
+* Redemption options are presented during checkout
+* Point earning and redemption history is available
+* Tiered loyalty levels with different benefits
+* Promotional double/triple point events can be configured
+BUSINESS VALUE: Medium - Improves customer retention and lifetime value
+TECHNICAL DEBT: Medium - Requires integration with order processing
+DEPENDENCIES: Order Service, User Service, Promotion Engine
+AFFECTED MODULES: Loyalty Service, User Service, Checkout Service, Frontend
+IMPLEMENTATION DETAILS: Implements point calculation rules engine, uses event-driven architecture for point transactions
+
+ISSUE TYPE: Story
+KEY: ECOM-112
+SUMMARY: Product Comparison
+STATUS: To Do
+PRIORITY: Low
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Unassigned
+CREATED: 03/Sep/2025
+UPDATED: 05/Sep/2025
+COMPONENTS: Product Catalog, Frontend
+LABELS: user-experience, shopping-tools
+EPIC LINK: ECOM-011
+SPRINT: Backlog
+STORY POINTS: 8
+DESCRIPTION: As a customer, I want to compare multiple products side-by-side so that I can evaluate features and make an informed purchase decision.
+ACCEPTANCE CRITERIA:
+* "Add to Compare" button on product tiles and product pages
+* Compare tool shows products in a table with feature comparison
+* At least 2 and up to 4 products can be compared simultaneously
+* Comparison highlights similarities and differences
+* Remove products from comparison or add new ones
+* Comparison can be shared via link
+BUSINESS VALUE: Low - Assists decision making for complex products
+TECHNICAL DEBT: Low - Mostly frontend implementation
+DEPENDENCIES: Product Catalog Service
+AFFECTED MODULES: Product Service, Frontend
+IMPLEMENTATION DETAILS: Implements dynamic feature comparison matrix, uses local storage for comparison state
+
+ISSUE TYPE: Story
+KEY: ECOM-113
+SUMMARY: Guest Checkout
+STATUS: In Progress
+PRIORITY: High
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: James Rodriguez (Full Stack Developer)
+CREATED: 19/Aug/2025
+UPDATED: 10/Sep/2025
+COMPONENTS: Checkout, User Service, Order Management
+LABELS: core-functionality, conversion-optimization
+EPIC LINK: ECOM-005
+SPRINT: Sprint 2
+STORY POINTS: 8
+DESCRIPTION: As a visitor, I want to complete a purchase without creating an account so that I can check out quickly without committing to registration.
+ACCEPTANCE CRITERIA:
+* Checkout offers options for guest checkout or login/register
+* Guest checkout collects only essential information
+* Option to create account is presented after order completion
+* Order confirmation works for guest users via email
+* Guest orders can be viewed using order number and email
+BUSINESS VALUE: High - Reduces checkout abandonment
+TECHNICAL DEBT: Medium - Requires anonymous user handling
+DEPENDENCIES: Checkout Service, Order Service, Email Service
+AFFECTED MODULES: Checkout Service, User Service, Order Service, Frontend
+IMPLEMENTATION DETAILS: Implements session-based cart for guests, provides account creation from guest order details
+
+ISSUE TYPE: Story
+KEY: ECOM-114
+SUMMARY: Mobile Responsive Design
+STATUS: In Progress
+PRIORITY: High
+REPORTER: Sarah Johnson (Product Owner)
+ASSIGNEE: Lisa Park (Frontend Developer)
+CREATED: 22/Aug/2025
+UPDATED: 09/Sep/2025
+COMPONENTS: Frontend, UI/UX
+LABELS: mobile, user-experience
+EPIC LINK: ECOM-012
+SPRINT: Sprint 2
+STORY POINTS: 13
+DESCRIPTION: As a mobile user, I want the e-commerce platform to be fully responsive so that I can browse and purchase products from my smartphone or tablet with the same ease as on desktop.
+ACCEPTANCE CRITERIA:
+* All pages render correctly on mobile devices (iOS and Android)
+* Navigation is optimized for touch interaction
+* Product images are optimized for mobile bandwidth
+* Checkout process is streamlined for mobile completion
+* Form fields use appropriate mobile input types
+* Performance is optimized for mobile networks
+BUSINESS VALUE: High - Mobile traffic represents 65% of total visits
+TECHNICAL DEBT: Medium - Requires ongoing maintenance across breakpoints
+DEPENDENCIES: None
+AFFECTED MODULES: Frontend, UI Components
+IMPLEMENTATION DETAILS: Uses mobile-first responsive design, implements touch-friendly UI components, optimizes image loading for mobile
