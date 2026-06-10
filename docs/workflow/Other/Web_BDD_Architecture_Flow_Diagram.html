@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDD Architecture - Beautiful Flow</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: auto;
+        }
+        .container {
+            width: 100%;
+            max-width: 1800px;
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+        .header h1 {
+            font-size: 3.2em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-shadow: 3px 3px 12px rgba(0,0,0,0.3);
+            letter-spacing: -0.5px;
+        }
+        .header .subtitle {
+            font-size: 1.4em;
+            font-weight: 300;
+            opacity: 0.95;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.2);
+        }
+        .diagram-box {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 
+                0 30px 80px rgba(0,0,0,0.25),
+                0 10px 30px rgba(0,0,0,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            overflow-x: auto;
+            animation: fadeInUp 0.8s ease-out;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            min-width: 1600px;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            background: linear-gradient(145deg, #ffffff 0%, #f5f5f5 100%);
+            padding: 12px 22px;
+            border-radius: 12px;
+            box-shadow: 
+                0 6px 20px rgba(0,0,0,0.12),
+                0 2px 6px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.8);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .legend-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.18),
+                0 4px 10px rgba(0,0,0,0.12);
+        }
+        .legend-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            margin-right: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .legend-text {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.95em;
+            text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @media print {
+            body { background: white; }
+            .header { color: #333; }
+            .diagram-box { box-shadow: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>BDD Test Scenario Generation</h1>
+            <div class="subtitle">Automated Architecture Workflow</div>
+        </div>
+
+        <div class="diagram-box">
+            <div class="mermaid">
+%%{init: {'theme':'base', 'themeVariables': {'fontSize':'17px','fontFamily':'Segoe UI, system-ui','primaryColor':'#e8f4fd','primaryBorderColor':'#1976d2','lineColor':'#1565c0','edgeLabelBackground':'#ffffff','clusterBkg':'#f8f9fa','clusterBorder':'#dee2e6'}}}%%
+
+graph LR
+    Start(["🎯 <b>INPUT</b><br/>JIRA Story"])
+    
+    subgraph Phase1["<b>PHASE 1: VERIFY SYSTEMS</b>"]
+        direction TB
+        P1A["⚡ Check Atlassian<br/>MCP Server"]
+        P1B["⚡ Check Context<br/>MCP Server"]
+        P1C["✅ Verify Context<br/>Files"]
+        P1A --> P1B --> P1C
+    end
+    
+    subgraph Phase2["<b>PHASE 2: FETCH STORY</b>"]
+        direction TB
+        P2A["🔍 Check Local<br/>Cache"]
+        P2B["🌐 Fetch from<br/>JIRA API"]
+        P2C["📝 Parse Story<br/>Data"]
+        P2A --> P2B --> P2C
+    end
+    
+    subgraph Phase3["<b>PHASE 3: LOAD CONTEXT</b>"]
+        direction TB
+        P3A["📱 Application<br/>Context"]
+        P3B["🏗️ Domain<br/>Model"]
+        P3C["📋 Business<br/>Rules"]
+        P3A -.-> P3D["🔗 Combined<br/>Context"]
+        P3B -.-> P3D
+        P3C -.-> P3D
+    end
+    
+    subgraph Phase4["<b>PHASE 4: GENERATE</b>"]
+        direction TB
+        P4A["📊 Plan Coverage<br/>A-G Categories"]
+        P4B["✍️ Write Gherkin<br/>Scenarios"]
+        P4C["🔢 Create Examples<br/>Tables"]
+        P4A --> P4B --> P4C
+    end
+    
+    subgraph Phase5["<b>PHASE 5: VALIDATE</b>"]
+        direction TB
+        P5A["✅ Acceptance<br/>Coverage"]
+        P5B["✅ Business Rules<br/>Coverage"]
+        P5C["🎯 Quality Score<br/>Check"]
+        P5A --> P5B --> P5C
+    end
+    
+    subgraph Phase6["<b>PHASE 6: SAVE</b>"]
+        direction TB
+        P6A["📄 Add Metadata<br/>Traceability"]
+        P6B["💾 Save Feature<br/>File"]
+        P6C["📊 Generate<br/>Report"]
+        P6A --> P6B --> P6C
+    end
+    
+    End(["✅ <b>OUTPUT</b><br/>Feature File"])
+    
+    Start ==>|"Story ID"| Phase1
+    Phase1 ==>|"Ready"| Phase2
+    Phase2 ==>|"Data"| Phase3
+    Phase3 ==>|"Context"| Phase4
+    Phase4 ==>|"Scenarios"| Phase5
+    Phase5 ==>|"Pass"| Phase6
+    Phase5 -.->|"Retry"| Phase4
+    Phase6 ==>|"Complete"| End
+    
+    style Start fill:#e0f2f1,stroke:#00695c,stroke-width:4px,color:#004d40
+    style End fill:#c8e6c9,stroke:#2e7d32,stroke-width:4px,color:#1b5e20
+    
+    style Phase1 fill:#ffebee,stroke:#c62828,stroke-width:4px,color:#b71c1c,rx:18,ry:18
+    style Phase2 fill:#fff3e0,stroke:#ef6c00,stroke-width:4px,color:#e65100,rx:18,ry:18
+    style Phase3 fill:#e1f5fe,stroke:#0277bd,stroke-width:4px,color:#01579b,rx:18,ry:18
+    style Phase4 fill:#e8f5e9,stroke:#388e3c,stroke-width:4px,color:#2e7d32,rx:18,ry:18
+    style Phase5 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:4px,color:#6a1b9a,rx:18,ry:18
+    style Phase6 fill:#fff9c4,stroke:#f57f17,stroke-width:4px,color:#f57f17,rx:18,ry:18
+    
+    style P1A fill:#ffcdd2,stroke:#d32f2f,stroke-width:2px,color:#b71c1c
+    style P1B fill:#ffcdd2,stroke:#d32f2f,stroke-width:2px,color:#b71c1c
+    style P1C fill:#ffcdd2,stroke:#d32f2f,stroke-width:2px,color:#b71c1c
+    
+    style P2A fill:#ffe0b2,stroke:#f57c00,stroke-width:2px,color:#e65100
+    style P2B fill:#ffe0b2,stroke:#f57c00,stroke-width:2px,color:#e65100
+    style P2C fill:#ffe0b2,stroke:#f57c00,stroke-width:2px,color:#e65100
+    
+    style P3A fill:#b3e5fc,stroke:#0288d1,stroke-width:2px,color:#01579b
+    style P3B fill:#b3e5fc,stroke:#0288d1,stroke-width:2px,color:#01579b
+    style P3C fill:#b3e5fc,stroke:#0288d1,stroke-width:2px,color:#01579b
+    style P3D fill:#b3e5fc,stroke:#0288d1,stroke-width:2px,color:#01579b
+    
+    style P4A fill:#c8e6c9,stroke:#43a047,stroke-width:2px,color:#2e7d32
+    style P4B fill:#c8e6c9,stroke:#43a047,stroke-width:2px,color:#2e7d32
+    style P4C fill:#c8e6c9,stroke:#43a047,stroke-width:2px,color:#2e7d32
+    
+    style P5A fill:#e1bee7,stroke:#8e24aa,stroke-width:2px,color:#6a1b9a
+    style P5B fill:#e1bee7,stroke:#8e24aa,stroke-width:2px,color:#6a1b9a
+    style P5C fill:#e1bee7,stroke:#8e24aa,stroke-width:2px,color:#6a1b9a
+    
+    style P6A fill:#fff59d,stroke:#fbc02d,stroke-width:2px,color:#f57f17
+    style P6B fill:#fff59d,stroke:#fbc02d,stroke-width:2px,color:#f57f17
+    style P6C fill:#fff59d,stroke:#fbc02d,stroke-width:2px,color:#f57f17
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); border: 2px solid #c62828;"></div>
+                <div class="legend-text">Server Verification</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border: 2px solid #ef6c00;"></div>
+                <div class="legend-text">Story Retrieval</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: linear-gradient(135deg, #e1f5fe 0%, #b3e5fc 100%); border: 2px solid #0277bd;"></div>
+                <div class="legend-text">Context Loading</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border: 2px solid #388e3c;"></div>
+                <div class="legend-text">Scenario Generation</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border: 2px solid #7b1fa2;"></div>
+                <div class="legend-text">Quality Validation</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: linear-gradient(135deg, #fff9c4 0%, #fff59d 100%); border: 2px solid #f57f17;"></div>
+                <div class="legend-text">Output Generation</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 25,
+                nodeSpacing: 55,
+                rankSpacing: 130
+            }
+        });
+    </script>
+</body>
+</html>

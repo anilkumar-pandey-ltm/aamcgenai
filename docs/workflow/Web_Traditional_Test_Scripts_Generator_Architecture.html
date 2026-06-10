@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Traditional Test Scripts Generator - Architecture</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: auto;
+            overflow-y: auto;
+        }
+        .container {
+            width: 100%;
+            max-width: 2100px;            min-width: 1900px;        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 12px rgba(0,0,0,0.3);
+        }
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+        .diagram-box {
+            background: white;
+            border-radius: 25px;
+            padding: 60px 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow-x: auto;
+        }
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            min-width: 1900px;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            background: #f5f5f5;
+            padding: 10px 18px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .legend-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .legend-text {
+            color: #333;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ Web Traditional Test Scripts Generator</h1>
+            <div class="subtitle">Non-BDD Test Script Generation from Test Cases</div>
+        </div>
+
+        <div class="diagram-box">
+            <div class="mermaid">
+%%{init: {'theme':'base', 'themeVariables': {'fontSize':'23px','fontFamily':'Arial, Segoe UI','primaryColor':'#fafafa','primaryBorderColor':'#333','lineColor':'#0277bd','edgeLabelBackground':'#ffffff'}}}%%
+
+graph LR
+    Start(["<b>📥 INPUT</b><br/><br/>Test Cases<br/>Page Objects"])
+    
+    subgraph Phase1["<b>PHASE 1: LOAD CONTEXT</b>"]
+        direction TB
+        P1A["🔌 <b>MCP Automation</b><br/>Server Query"]
+        P1B["📄 <b>Load Test Cases</b><br/>Excel/CSV/YAML"]
+        P1C["📦 <b>Load Page Objects</b><br/>Available Methods"]
+        P1D["📋 <b>Load Locators</b><br/>YAML Files"]
+        P1A --> P1B --> P1C --> P1D
+    end
+    
+    subgraph Phase2["<b>PHASE 2: PARSE TEST CASES</b>"]
+        direction TB
+        P2A["📝 <b>Extract Steps</b><br/>Test Case Steps"]
+        P2B["🎯 <b>Identify Actions</b><br/>Click, Type, Verify"]
+        P2C["📊 <b>Parse Test Data</b><br/>Input Values"]
+        P2D["✅ <b>Extract Assertions</b><br/>Expected Results"]
+        P2A --> P2B --> P2C --> P2D
+    end
+    
+    subgraph Phase3["<b>PHASE 3: MAP TO FRAMEWORK</b>"]
+        direction TB
+        P3A["🔍 <b>Detect Framework</b><br/>Playwright/Selenium"]
+        P3B["📦 <b>Map Page Methods</b><br/>Test Step to Code"]
+        P3C["🎯 <b>Map Locators</b><br/>Element Selectors"]
+        P3A --> P3B --> P3C
+    end
+    
+    subgraph Phase4["<b>PHASE 4: GENERATE SCRIPTS</b>"]
+        direction TB
+        P4A["✍️ <b>Create Test Class</b><br/>Test File Structure"]
+        P4B["🔧 <b>Setup/Teardown</b><br/>Before/After Hooks"]
+        P4C["📝 <b>Generate Methods</b><br/>Test Case Methods"]
+        P4D["🎯 <b>Add Assertions</b><br/>Validation Code"]
+        P4A --> P4B --> P4C --> P4D
+    end
+    
+    subgraph Phase5["<b>PHASE 5: ADD UTILITIES</b>"]
+        direction TB
+        P5A["📊 <b>Test Data</b><br/>Data Providers"]
+        P5B["📸 <b>Screenshots</b><br/>On Failure"]
+        P5C["📋 <b>Reporting</b><br/>Test Results"]
+        P5A --> P5B --> P5C
+    end
+    
+    subgraph Phase6["<b>PHASE 6: SAVE OUTPUT</b>"]
+        direction TB
+        P6A["💾 <b>Save Scripts</b><br/>tests/ folder"]
+        P6B["📄 <b>Create Config</b><br/>Test Configuration"]
+        P6C["📊 <b>Generate Report</b><br/>Traceability Matrix"]
+        P6A --> P6B --> P6C
+    end
+    
+    End(["<b>📤 OUTPUT</b><br/><br/>Test Scripts<br/>+ Config"])
+    
+    Start ==>|"Inputs"| Phase1
+    Phase1 ==>|"Context Loaded"| Phase2
+    Phase2 ==>|"Steps Parsed"| Phase3
+    Phase3 ==>|"Mapped"| Phase4
+    Phase4 ==>|"Scripts Generated"| Phase5
+    Phase5 ==>|"Utilities Added"| Phase6
+    Phase6 ==>|"✓ Complete"| End
+    
+    Phase4 -.->|"Missing Page Object"| Phase1
+    
+    style Start fill:#e3f2fd,stroke:#01579b,stroke-width:4px,color:#000,font-size:23px
+    style End fill:#bbdefb,stroke:#0277bd,stroke-width:4px,color:#000,font-size:23px
+    
+    style Phase1 fill:#e1f5fe,stroke:#0277bd,stroke-width:5px,color:#000,font-size:24px
+    style Phase2 fill:#e0f7fa,stroke:#00838f,stroke-width:5px,color:#000,font-size:24px
+    style Phase3 fill:#e0f2f1,stroke:#00695c,stroke-width:5px,color:#000,font-size:24px
+    style Phase4 fill:#f1f8e9,stroke:#558b2f,stroke-width:5px,color:#000,font-size:24px
+    style Phase5 fill:#fff3e0,stroke:#ef6c00,stroke-width:5px,color:#000,font-size:24px
+    style Phase6 fill:#fce4ec,stroke:#c2185b,stroke-width:5px,color:#000,font-size:24px
+    
+    style P1A fill:#b3e5fc,stroke:#0288d1,stroke-width:3px,color:#000
+    style P1B fill:#b3e5fc,stroke:#0288d1,stroke-width:3px,color:#000
+    style P1C fill:#b3e5fc,stroke:#0288d1,stroke-width:3px,color:#000
+    style P1D fill:#b3e5fc,stroke:#0288d1,stroke-width:3px,color:#000
+    
+    style P2A fill:#b2ebf2,stroke:#00acc1,stroke-width:3px,color:#000
+    style P2B fill:#b2ebf2,stroke:#00acc1,stroke-width:3px,color:#000
+    style P2C fill:#b2ebf2,stroke:#00acc1,stroke-width:3px,color:#000
+    style P2D fill:#b2ebf2,stroke:#00acc1,stroke-width:3px,color:#000
+    
+    style P3A fill:#b2dfdb,stroke:#00897b,stroke-width:3px,color:#000
+    style P3B fill:#b2dfdb,stroke:#00897b,stroke-width:3px,color:#000
+    style P3C fill:#b2dfdb,stroke:#00897b,stroke-width:3px,color:#000
+    
+    style P4A fill:#dcedc8,stroke:#689f38,stroke-width:3px,color:#000
+    style P4B fill:#dcedc8,stroke:#689f38,stroke-width:3px,color:#000
+    style P4C fill:#dcedc8,stroke:#689f38,stroke-width:3px,color:#000
+    style P4D fill:#dcedc8,stroke:#689f38,stroke-width:3px,color:#000
+    
+    style P5A fill:#ffe0b2,stroke:#f57c00,stroke-width:3px,color:#000
+    style P5B fill:#ffe0b2,stroke:#f57c00,stroke-width:3px,color:#000
+    style P5C fill:#ffe0b2,stroke:#f57c00,stroke-width:3px,color:#000
+    
+    style P6A fill:#f8bbd0,stroke:#c2185b,stroke-width:3px,color:#000
+    style P6B fill:#f8bbd0,stroke:#c2185b,stroke-width:3px,color:#000
+    style P6C fill:#f8bbd0,stroke:#c2185b,stroke-width:3px,color:#000
+            </div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #b3e5fc; border: 2px solid #0277bd;"></div>
+                <div class="legend-text">Phase 1: Context Loading</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #b2ebf2; border: 2px solid #00838f;"></div>
+                <div class="legend-text">Phase 2: Test Case Parsing</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #b2dfdb; border: 2px solid #00695c;"></div>
+                <div class="legend-text">Phase 3: Framework Mapping</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #dcedc8; border: 2px solid #558b2f;"></div>
+                <div class="legend-text">Phase 4: Script Generation</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #ffe0b2; border: 2px solid #ef6c00;"></div>
+                <div class="legend-text">Phase 5: Utility Addition</div>
+            </div>
+            <div class="legend-item">
+                <div class="legend-dot" style="background: #f8bbd0; border: 2px solid #c2185b;"></div>
+                <div class="legend-text">Phase 6: Output Generation</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'base',
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 40,
+                nodeSpacing: 80,
+                rankSpacing: 160
+            }
+        });
+    </script>
+</body>
+</html>

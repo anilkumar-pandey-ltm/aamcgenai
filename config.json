@@ -1,0 +1,51 @@
+{
+  "browser": {
+    "name": "chrome",
+    "headless": false,
+    "window_size": [1920, 1080],
+    "implicit_wait": 10,
+    "page_load_timeout": 30,
+    "script_timeout": 30
+  },
+  "ai": {
+    "openai_api_key": "",
+    "model": "gpt-4",
+    "max_tokens": 2000,
+    "temperature": 0.3,
+    "enable_copilot": true
+  },
+  "mcp": {
+    "jira_enabled": false,
+    "jira_url": "",
+    "jira_token": "",
+    "ado_enabled": false,
+    "ado_url": "",
+    "ado_token": "",
+    "custom_servers": {}
+  },
+  "test": {
+    "parallel_execution": false,
+    "max_workers": 4,
+    "retry_count": 3,
+    "screenshot_on_failure": true,
+    "video_recording": false,
+    "report_format": "allure"
+  },
+  "logging": {
+    "level": "INFO",
+    "log_dir": "logs",
+    "max_file_size": "10MB",
+    "backup_count": 5
+  },
+  "performance": {
+    "enable_metrics": true,
+    "metrics_interval": 1,
+    "memory_threshold": 512,
+    "cpu_threshold": 80
+  },
+  "security": {
+    "encrypt_sensitive_data": true,
+    "api_key_rotation": true,
+    "secure_storage": true
+  }
+}

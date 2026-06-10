@@ -1,0 +1,123 @@
+# CONVEY 1.0 - APPLICATION CONTEXT
+
+## Overview
+Convey® is a web application provided by the AAMC designed to streamline financial interest disclosure submissions for physicians, researchers, and scientists while ensuring participating organizations receive only necessary information.
+
+## Business Model
+- **For Organizations:** Subscription-based annual fee (volume-based pricing)
+- **For Individuals:** Free profile creation and disclosure submission
+- **Access Method:** Organizations provide unique URLs for direct disclosure invitations
+- **Customization:** Each organization tailors disclosure requirements for personnel, contributors, and researchers
+
+## Key Functionality
+
+### Disclosure Workflow
+1. Individual receives link via email, journal website, or organization portal
+2. User adds financial interests requiring disclosure
+3. System automatically filters based on organization requirements (e.g., 3-year lookback period)
+4. User selects relevant financial interests and relationships for specific disclosure
+5. Disclosure submitted to requesting organization
+
+### Smart Filtering
+- Convey applies organization-specific rules to existing user data
+- Excludes non-relevant relationships (e.g., aged-out disclosures)
+- Reuses profile data across multiple disclosures
+
+---
+
+## User Roles & Permissions
+
+### 1. Discloser
+**Capabilities:**
+- Log in and manage account
+- Create/edit financial interests
+- Create disclosure
+- Submit disclosure to participating organizations
+
+**Restrictions:** Primary user role with standard access
+
+---
+
+### 2. Proxy
+**Capabilities:**
+- Log in on behalf of a Discloser
+- Update financial interests
+- View disclosure history
+
+**Restrictions:** Cannot create, edit, or submit disclosures on behalf of Discloser
+
+---
+
+### 3. Disclosure Reviewer
+**Capabilities:**
+- Access and review submitted disclosures
+- Download disclosures for assigned discloser lists
+
+**Restrictions:** Limited to assigned discloser lists only
+
+---
+
+### 4. Discloser List Owner
+**Inherits:** All Disclosure Reviewer rights
+
+**Additional Capabilities:**
+- Create and upload disclosers for new discloser lists
+- Modify settings for assigned lists
+- Add/remove disclosers from assigned lists
+- Manage Disclosure Reviewers and Discloser List Owners for created or assigned lists
+
+**Restrictions:** Limited to created or assigned lists
+
+---
+
+### 5. Disclosure Manager
+**Inherits:** All Discloser List Owner rights
+
+**Additional Capabilities:**
+- Access and review ALL submitted disclosures for the organization
+- Download all disclosures across organization
+- Generate Disclosure URLs for organization
+- Manage Disclosure Reviewers and Discloser List Owners for ALL lists in organization
+
+**Restrictions:** Organization-wide access only
+
+---
+
+### 6. Administrator
+**Inherits:** All Disclosure Manager rights
+
+**Additional Capabilities:**
+- Manage organization's Authorized Representatives (invites, role changes, deactivations)
+- Manage organization's email templates
+- View and modify organization's Policy settings
+
+**Restrictions:** Full control within organization scope
+
+---
+
+### 7. Convey AAMC Admin
+**Special Role:** Platform-level administrator
+
+**Capabilities:**
+- Manage policy rules for any subscriber
+- Configure additional questions for any subscriber
+- Manage email templates for any subscriber
+- View user history across platform
+
+**Restrictions:** Cannot view or download submitted disclosures (privacy protection)
+
+---
+
+## Role Hierarchy Summary
+```
+Discloser (base user)
+Proxy (delegated viewer)
+Disclosure Reviewer (list-scoped reviewer)
+  └─ Discloser List Owner (list manager)
+       └─ Disclosure Manager (org-wide manager)
+            └─ Administrator (org admin)
+Convey AAMC Admin (platform admin - separate hierarchy)
+```
+
+---
+

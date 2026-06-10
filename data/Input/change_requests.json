@@ -1,0 +1,13 @@
+{
+  "change_requests": [{
+    "id": "CR003", 
+    "title": "User Profile Enhancement for Loyalty Program",
+    "description": "Add functionality to the user profile section allowing customers to view and manage their loyalty points, redemption history directly from their account dashboard.",
+    "type": "enhancement",
+    "priority": "medium",
+    "business_justification": "Improves user engagement and transparency in the loyalty program. Expected to increase repeat purchases by 10% and reduce support queries related to loyalty status."
+  }]
+}
+      
+      
+

@@ -1,0 +1,75 @@
+=== STORY METADATA ===
+Source: Jira
+Story ID: CNV-11335
+Title: Convey - Discloser: Update customer messaging displayed within 'Invalid Link' pop-up displayed when invitation link for an archived Discloser is opened
+Type: Story
+Status: Code Review
+Priority: N/A
+Assignee: Kamal Singh
+Reporter: N/A
+Created: N/A
+Updated: N/A
+Sprint: N/A
+Epic: N/A
+Labels: None
+
+=== DESCRIPTION ===
+As a discloser with a valid invitation link, in the scenario where the discloser has been archived before the discloser opens the invitation link, I want the customer messaging within the 'Invalid Link' pop-up displayed to be updated for improved experience.
+
+=== ACCEPTANCE CRITERIA ===
+**Given** I am a discloser with valid invitation link and subscriber has archived my discloser record
+**When** I click on the invitation link or paste the invitation link URL in browser and open it
+**Then** I want system to display the 'Invalid Link' pop-up with below revised customer messaging replacing all existing verbiage (except for pop-up header all messaging within pop-up will be replaced with below message):
+
+> This link is no longer valid for **[Policy Name]**. Please contact **[List Contact Email]** or [Convey Support](https://www.aamc.org/contact-convey-support) at **(202) 909-2001**. Support hours are Monday - Friday 9 am - 5 pm ET; closed Wednesday between 3 pm - 5 pm ET.
+
+Note: Convey Support (https://www.convey.org/contact-convey-support) - on click, the link should open in new browser tab
+
+=== TECHNICAL DETAILS ===
+### UI Changes Required:
+- Update 'Invalid Link' pop-up modal messaging
+- Preserve pop-up header (do not modify)
+- Replace all existing body content with new message
+- Include dynamic fields: [Policy Name] and [List Contact Email]
+- Add hyperlink to Convey Support that opens in new tab
+- Ensure proper formatting of phone number and support hours
+
+### Business Context:
+- Scenario: Archived discloser attempts to use invitation link
+- Current Behavior: Generic invalid link message
+- New Behavior: Specific, actionable message with contact information
+- User Role: Discloser
+- Trigger: Opening invitation link for archived discloser record
+
+=== DEPENDENCIES ===
+None identified
+
+=== COMMENTS ===
+Visual reference provided for message placement within the Invalid Link pop-up
+
+=== ATTACHMENTS ===
+Visual Reference Screenshot provided in description
+
+=== ADDITIONAL FIELDS ===
+Status Category: In Progress (Yellow)
+Issue ID: 551574
+Self URL: https://api.atlassian.com/ex/jira/91bbd76d-8458-4f12-aa6f-bd4c86e0281f/rest/api/3/issue/551574
+Web URL: https://aamc.atlassian.net/browse/CNV-11335
+Project: DEV1605 Convey Implementation
+Project Key: CNV
+
+=== DEFINITION OF DONE ===
+* Invalid Link pop-up displays updated customer messaging when archived discloser opens invitation link
+* Pop-up header remains unchanged
+* All existing body content is replaced with new message
+* Dynamic fields [Policy Name] and [List Contact Email] are properly populated
+* Convey Support hyperlink opens in new browser tab (target="_blank")
+* Phone number and support hours are correctly formatted and displayed
+* Message is clear, concise, and provides actionable next steps
+* Cross-browser testing completed (Chrome, Firefox, Safari, Edge)
+* Responsive design verified on desktop and mobile devices
+* Accessibility standards met (WCAG 2.1 AA)
+* Automated BDD test scenarios implemented and passing
+* Manual testing verification completed for archived discloser scenario
+* Code reviewed and merged into the main branch
+* Documentation updated with new messaging format

@@ -1,0 +1,86 @@
+=== STORY METADATA ===
+Source: Jira
+Story ID: CNV-11616
+Title: Convey - Discloser: Receives notification email on Disclosure Expiration
+Type: Story
+Status: In Progress
+Priority: N/A
+Assignee: Kamal Singh
+Reporter: N/A
+Created: N/A
+Updated: N/A
+Sprint: N/A
+Epic: N/A
+Labels: None
+Related Stories: CNV-11603, CNV-11604
+
+=== DESCRIPTION ===
+As a Convey Discloser who has submitted a disclosure for a policy that has Disclosure Expiration Notifications enabled, I want to be notified on expiration of the disclosure submission.
+
+=== ACCEPTANCE CRITERIA ===
+**Given** I am active Convey Discloser with a Disclosure submission in past for a policy for which Disclosure Expiration Notification flag is tuned ON by policy Subscriber (CNV-11603)
+**When** the Disclosure submitted for the policy expires (as per expiry date configured for the policy)
+**Then** I want Convey system to send notification email to the Discloser (with content as defined in CNV-11604)
+
+**Additional Notes:**
+* Notification email will be sent for all expired disclosures which have been submitted via public link, generic link or list invitation link
+* For expired disclosures submitted via public link or generic links, the notification will be sent to their profile email ID given during disclosure submission
+* For expired disclosures submitted via list invitation link, the notification will be sent to their invitation email address
+
+=== TECHNICAL DETAILS ===
+### Batch Job Configuration:
+- The batch job should be configured to run at 6:00 AM ET time (this can be changed in future if needed)
+
+### Email Notification Specification:
+**Subject:** Request to redisclose for expired disclosure
+**From:** <Sender email ID configured>
+**Message (body text):**
+Your disclosure for <%POLICY_NAME%> has expired. Request you to please submit the disclosure again by clicking on below link> Start Redisclosure for <POLICY Name>
+
+### Email Routing Rules:
+1. **Public Link or Generic Link Disclosures:**
+   - Send notification to profile email ID provided during disclosure submission
+   
+2. **List Invitation Link Disclosures:**
+   - Send notification to invitation email address
+
+### Disclosure Types Covered:
+- Public link submitted disclosures
+- Generic link submitted disclosures
+- List invitation link submitted disclosures
+
+### Business Context:
+- User Role: Discloser
+- Feature: Disclosure Expiration Notification System
+- Trigger: Disclosure expiration date reached
+- Prerequisite: Policy must have Disclosure Expiration Notification flag enabled (CNV-11603)
+- Email Content: Defined in CNV-11604
+
+=== DEPENDENCIES ===
+- CNV-11603: Disclosure Expiration Notification flag configuration by policy Subscriber
+- CNV-11604: Email notification content template definition
+
+=== DEFINITION OF DONE ===
+* Batch job configured to run at 6:00 AM ET daily
+* Batch job identifies all disclosures expiring on current date for policies with expiration notifications enabled
+* Email notifications sent to correct email addresses based on disclosure submission type (public/generic/list invitation)
+* Email contains correct subject line: "Request to redisclose for expired disclosure"
+* Email body includes policy name dynamically populated
+* Email body includes redisclosure link for the specific policy
+* Notification sent only for policies where Disclosure Expiration Notification flag is enabled
+* System logs all notification attempts (success/failure)
+* Email delivery failures are tracked and reported
+* All three disclosure types handled correctly (public link, generic link, list invitation link)
+* Email routing logic tested for all three submission types
+* BDD test scenarios implemented and passing
+* Manual testing verification completed
+* Code reviewed and merged
+* Documentation updated with batch job schedule and email template
+
+=== ADDITIONAL FIELDS ===
+Status Category: In Progress (Yellow)
+Issue ID: 578742
+Self URL: https://api.atlassian.com/ex/jira/91bbd76d-8458-4f12-aa6f-bd4c86e0281f/rest/api/3/issue/578742
+Web URL: https://aamc.atlassian.net/browse/CNV-11616
+Project: DEV1605 Convey Implementation
+Project Key: CNV

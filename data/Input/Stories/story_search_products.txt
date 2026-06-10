@@ -1,0 +1,10 @@
+Title: Search for Products
+
+Story Description:
+As a customer, I want to search for products by name or keyword so that I can quickly locate specific items.
+
+Acceptance Criteria:
+- A search bar is available on all main pages.
+- Search returns relevant products based on entered keywords.
+- No results message is shown if nothing matches.
+- Search suggestions are provided as the user types.

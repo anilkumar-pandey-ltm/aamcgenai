@@ -1,0 +1,10 @@
+Title: Checkout and Payment
+
+Story Description:
+As a customer, I want to checkout and pay for my order using various payment methods so that I have flexibility.
+
+Acceptance Criteria:
+- User can review cart and order summary before payment.
+- Multiple payment options are available (credit card, PayPal, etc.).
+- User receives confirmation after successful payment.
+- Error messages are shown for failed payments.
